@@ -1,5 +1,5 @@
 
-interface Show {
+type Show = {
     id: number;
     title: string;
     original_title: string;
@@ -11,7 +11,7 @@ interface Show {
     genre_ids: number[];
 }
 
-interface upComingShow {
+type upComingShow = {
     first_air_date: string;
     id: number;
     name: string;
@@ -20,7 +20,7 @@ interface upComingShow {
     genre_ids: number[];
 }
 
-interface recentlyAddedMovie {
+type recentlyAddedMovie = {
     id: number;
     original_title: string;
     poster_path: string;
