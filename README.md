@@ -1,50 +1,55 @@
-# React + TypeScript + Vite
+# TV Movie List
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+This application allows users to search for movies and TV shows using The Movie Database (TMDB) API.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Setup
 
-## Expanding the ESLint configuration
+### Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Node.js
+- npm (Node Package Manager)
 
-- Configure the top-level `parserOptions` property like this:
+### Installation
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. Clone the repository:
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+   ```sh
+   git clone https://github.com/yourusername/tv-movie-list.git
+   cd tv-movie-list
+   ```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+2. Install the dependencies:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+   ```sh
+   npm install
+   ```
+
+3. Create a [.env](http://_vscodecontentref_/3) file in the root of the project and add your TMDB API key:
+
+   ```env
+   API_KEY=your_tmdb_api_key
+   ```
+
+   Replace `your_tmdb_api_key` with your actual TMDB API key. You can obtain an API key by creating an account on [The Movie Database](https://www.themoviedb.org/) and requesting an API key.
+
+4. Start the application:
+   ```sh
+   npm start
+   ```
+
+## Usage
+
+- Search for movies and TV shows using the search bar.
+- View trending, popular, top-rated, and upcoming movies and TV shows.
+
+## Environment Variables
+
+The application uses the following variablesenvironment:
+
+- [API_KEY](http://_vscodecontentref_/4): Your TMDB API key.
+
+## License
+
+This project is licensed under the MIT License.

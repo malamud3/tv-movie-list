@@ -1,8 +1,12 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 export const SearchStrings = {
         searchPlaceHolder: "Search for a Movie or a Tv show"
 };
 
-const API_KEY = "606d075a4fbbc18c603c1dbf8c440945";
+const API_KEY = process.env.API_KEY;
 const baseURL = "https://api.themoviedb.org/3/";
 const imgURL = "https://image.tmdb.org/t/p/w500/";
 
