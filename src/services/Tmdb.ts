@@ -29,11 +29,11 @@ type recentlyAddedMovie = {
     genre_ids: number[];
 }
 
-interface tmdbAPI {
-    getTrending(dataPage: number, Ganerfilter: number): Promise<Show[]>;
-    getPopular(dataPage: number, Ganerfilter: number): Promise<Show[]>;
-    getTopRated(dataPage: number, Ganerfilter: number): Promise<Show[]>;
-    getUpcoming(dataPage: number, Ganerfilter: number): Promise<upComingShow[]>;
-    getRecentlyAdded(dataPage: number, Ganerfilter: number): Promise<Show[]>;
-    doSearch(dataPage: number, query: string): Promise<Show[]>;
-}
+type tmdbAPI<T> = {
+    getTrending(dataPage: number, genreFilter: number): Promise<T[]>;
+    getPopular(dataPage: number, genreFilter: number): Promise<T[]>;
+    getTopRated(dataPage: number, genreFilter: number): Promise<T[]>;
+    getUpcoming(dataPage: number, genreFilter: number): Promise<T[]>;
+    getRecentlyAdded(dataPage: number, genreFilter: number): Promise<T[]>;
+    doSearch(dataPage: number, query: string): Promise<T[]>;
+};
