@@ -1,9 +1,9 @@
 .header {
-  max-width: 60rem;
   margin: auto;
   padding: 2rem;
   display: flex;
   justify-content: center;
+  box-shadow: 0 4px 8px rgba(106, 106, 124, 0.1);
 }
 .header nav {
   display: flex;
