@@ -2,11 +2,14 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const SearchStrings = {
+export const SearchStrings: { searchPlaceHolder: string } = {
         searchPlaceHolder: "Search for a Movie or a Tv show"
 };
 
-const API_KEY = process.env.API_KEY;
+const API_KEY: string = process.env.API_KEY || '';
+if (!API_KEY) {
+        throw new Error('API_KEY is not defined in the environment variables');
+}
 const baseURL = "https://api.themoviedb.org/3/";
 const imgURL = "https://image.tmdb.org/t/p/w500/";
 
