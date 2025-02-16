@@ -14,10 +14,6 @@ export const API_tmdb = async (props: tmdbAPIProps) => {
     const type = queryKey[0];
     const action = queryKey[1];
 
-    console.log('queryKey:', queryKey);
-    console.log('type:', type);
-    console.log('action:', action);
-
     async function getPopularMovies() {
         console.log(`2`);
         const url = API_TV.Movies.getPopularMovies;
