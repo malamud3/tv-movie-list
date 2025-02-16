@@ -8,7 +8,7 @@ type tmdbAPIProps = {
     query?: string;
 };
 
-export const API_tmdb = async (props: tmdbAPIProps): Promise<unknown> => {
+export const API_tmdb = async (props: tmdbAPIProps) => {
     const { type, dataPage, genreFilter = -1, query } = props;
 
     async function getPopular() {
@@ -30,9 +30,4 @@ export const API_tmdb = async (props: tmdbAPIProps): Promise<unknown> => {
         return data.results;
     }
 
-    async function fetchData() {
-        return await getPopular();
-    }
-
-    return fetchData();
 }
