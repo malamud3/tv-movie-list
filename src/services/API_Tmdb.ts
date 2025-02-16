@@ -8,7 +8,7 @@ type tmdbAPIProps = {
     query?: string;
 };
 
-export const API_tmdb = async (props: tmdbAPIProps) => {
+export const API_tmdb = (props: tmdbAPIProps) => {
     const { type, dataPage, genreFilter = -1, query } = props;
 
     async function getPopular() {
@@ -20,7 +20,6 @@ export const API_tmdb = async (props: tmdbAPIProps) => {
             case tmdbTypes.TV_SHOWS:
                 url = API_TV.TvShows.getPopularTvShows;
                 break;
-            // Add more cases as needed
             default:
                 throw new Error('Invalid type');
         }
@@ -30,4 +29,7 @@ export const API_tmdb = async (props: tmdbAPIProps) => {
         return data.results;
     }
 
+    return {
+        getPopular
+    };
 }

@@ -1,4 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
+import { API_tmdb } from '../services/API_Tmdb';
+import { tmdbTypes } from '../interface/Consts';
+
+async function fetchMovies() {
+  const apiInstance = API_tmdb({ type: tmdbTypes.MOVIES, dataPage: 1 });
+  const movies = await apiInstance.getPopular();
+  return movies;
+}
 
 export default function HomePage() {
   const {
