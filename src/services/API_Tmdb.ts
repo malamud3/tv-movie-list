@@ -8,7 +8,7 @@ type tmdbAPIProps = {
     query?: string;
 };
 
-export const API_tmdb = (props: tmdbAPIProps) => {
+export const API_tmdb = async (props: tmdbAPIProps) => {
     const { type, dataPage, genreFilter = -1, query } = props;
 
     async function getPopular() {

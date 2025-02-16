@@ -2,12 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import { API_tmdb } from '../services/API_Tmdb';
 import { tmdbTypes } from '../interface/Consts';
 
-async function fetchMovies() {
-  const apiInstance = API_tmdb({ type: tmdbTypes.MOVIES, dataPage: 1 });
-  const movies = await apiInstance.getPopular();
-  return movies;
-}
-
 export default function HomePage() {
   const {
     data: movies,
@@ -15,7 +9,10 @@ export default function HomePage() {
     error,
   } = useQuery<{ id: number; title: string }[]>({
     queryKey: ['movies'],
-    queryFn: fetchMovies,
+    queryFn: async () => {
+      const api = await API_tmdb({ type: tmdbTypes.MOVIES, dataPage: 1 });
+      return api.getPopular();
+    },
   });
 
   return (
