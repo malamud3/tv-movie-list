@@ -1,3 +1,4 @@
+import { tmdbTypes } from './Consts'
 
 export type Show = {
     id: number;
@@ -28,13 +29,3 @@ export type recentlyAddedMovie = {
     release_date: string;
     genre_ids: number[];
 }
-
-export type tmdbAPI<T> = {
-    getTrending(dataPage: number, genreFilter: number): Promise<T[]>;
-    getPopular(dataPage: number, genreFilter: number): Promise<T[]>;
-    getTopRated(dataPage: number, genreFilter: number): Promise<T[]>;
-    getUpcoming(dataPage: number, genreFilter: number): Promise<T[]>;
-    getRecentlyAdded(dataPage: number, genreFilter: number): Promise<T[]>;
-    doSearch(dataPage: number, query: string): Promise<T[]>;
-};
-

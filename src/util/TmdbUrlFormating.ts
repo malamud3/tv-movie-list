@@ -1,9 +1,3 @@
-import { API_TV, tmdbTypes } from '../interface/Consts'
-
-
-export const basicformatUrl = (): string | undefined => {
-    return '1' === tmdbTypes.MOVIES ? API_TV.Movies.getPopularMovies : API_TV.TVShows.getPopularTvShows;
-}
 
 export type formatUrlPageGanerProps = {
     url: string,

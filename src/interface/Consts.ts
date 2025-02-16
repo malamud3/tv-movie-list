@@ -21,7 +21,7 @@ const Movies = {
         getRecentlyAddedMovies: `${baseURL}discover/movie?api_key=${API_KEY}&sort_by=release_date.desc&include_adult=false&page=1&year=2023`
 };
 
-const TVShows = {
+const TvShows = {
         getGenreTVshowsIndex: `${baseURL}movie/list?api_key=${API_KEY}&language=en-US`,
         getTrendingTvShows: `${baseURL}trending/tv/day?api_key=${API_KEY}&language=en-US`,
         getUpcomingTvShows: `${baseURL}discover/tv?api_key=${API_KEY}&include_null_first_air_dates=false&sort_by=first_air_date.desc&first_air_date.gte=`,
@@ -35,7 +35,7 @@ export const API_TV = {
         baseURL,
         imgURL,
         Movies,
-        TVShows,
+        TvShows,
         doSearchMovie: `${baseURL}search/movie?api_key=${API_KEY}&query=`,
         doSearchTv: `${baseURL}search/tv?api_key=${API_KEY}&query=`
 };
