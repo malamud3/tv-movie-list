@@ -2,6 +2,7 @@ export const SearchStrings: { searchPlaceHolder: string } = {
         searchPlaceHolder: "Search for a Movie or a Tv show"
 };
 
+
 const API_KEY: string = import.meta.env.VITE_API_KEY || '';
 if (!API_KEY) {
         throw new Error('API_KEY is not defined in the environment variables');
@@ -20,7 +21,7 @@ const Movies = {
         getRecentlyAddedMovies: `${baseURL}discover/movie?api_key=${API_KEY}&sort_by=release_date.desc&include_adult=false&page=1&year=2023`
 };
 
-const TVshows = {
+const TVShows = {
         getGenreTVshowsIndex: `${baseURL}movie/list?api_key=${API_KEY}&language=en-US`,
         getTrendingTvShows: `${baseURL}trending/tv/day?api_key=${API_KEY}&language=en-US`,
         getUpcomingTvShows: `${baseURL}discover/tv?api_key=${API_KEY}&include_null_first_air_dates=false&sort_by=first_air_date.desc&first_air_date.gte=`,
@@ -34,7 +35,47 @@ export const API_TV = {
         baseURL,
         imgURL,
         Movies,
-        TVshows,
+        TVShows,
         doSearchMovie: `${baseURL}search/movie?api_key=${API_KEY}&query=`,
         doSearchTv: `${baseURL}search/tv?api_key=${API_KEY}&query=`
 };
+
+export const TV_genres: { [key: number]: string } = {
+        10759: "Action & Adventure",
+        16: "Animation",
+        35: "Comedy",
+        80: "Crime",
+        99: "Documentary",
+        18: "Drama",
+        10751: "Family",
+        9648: "Mystery",
+        10765: "Science Fiction",
+        37: "Western",
+        10768: "War & Politics"
+};
+
+export const Movie_genres: { [key: number]: string } = {
+        28: "Action",
+        12: "Adventure",
+        16: "Animation",
+        35: "Comedy",
+        80: "Crime",
+        99: "Documentary",
+        18: "Drama",
+        10751: "Family",
+        14: "Fantasy",
+        36: "History",
+        27: "Horror",
+        9648: "Mystery",
+        10749: "Romance",
+        878: "Science Fiction",
+        10770: "TV Movie",
+        53: "Thriller",
+        37: "Western"
+};
+
+
+export enum tmdbTypes {
+        MOVIES = '1',
+        TV_SHOWS = '2',
+}

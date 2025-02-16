@@ -1,12 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import { API_TV } from '../services/Consts';
-
-async function fetchMovies() {
-  console.log(API_TV.Movies.getPopularMovies);
-  const response = await fetch(API_TV.Movies.getPopularMovies);
-  const data = await response.json();
-  return data.results;
-}
 
 export default function HomePage() {
   const {
