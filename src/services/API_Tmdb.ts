@@ -1,35 +1,58 @@
-import { API_TV, tmdbTypes } from '../interface/Consts';
-import { formatUrlPageGener } from '../util/TmdbUrlFormating'
+import { API_TV, tmdbActions } from '../interface/Consts';
+import { formatUrlPageGener } from '../util/TmdbUrlFormating';
 
 type tmdbAPIProps = {
-    type: tmdbTypes,
+    queryKey: string[];
     dataPage: number;
     genreFilter?: number;
     query?: string;
+    signal?: AbortSignal;
 };
 
 export const API_tmdb = async (props: tmdbAPIProps) => {
-    const { type, dataPage, genreFilter = -1, query } = props;
+    const { queryKey, dataPage, genreFilter = -1, query, signal } = props;
+    const type = queryKey[0];
+    const action = queryKey[1];
 
-    async function getPopular() {
-        let url = '';
-        switch (type) {
-            case tmdbTypes.MOVIES:
-                url = API_TV.Movies.getPopularMovies;
-                break;
-            case tmdbTypes.TV_SHOWS:
-                url = API_TV.TvShows.getPopularTvShows;
-                break;
-            default:
-                throw new Error('Invalid type');
-        }
+    console.log('queryKey:', queryKey);
+    console.log('type:', type);
+    console.log('action:', action);
+
+    async function getPopularMovies() {
+        console.log(`2`);
+        const url = API_TV.Movies.getPopularMovies;
         const formattedUrl = formatUrlPageGener({ url, page: dataPage, gener: genreFilter });
-        const response = await fetch(formattedUrl);
+        console.log(`Fetching popular movies from URL: ${formattedUrl}`);
+        const response = await fetch(formattedUrl, { signal });
         const data = await response.json();
         return data.results;
     }
 
-    return {
-        getPopular
-    };
-}
+    async function getPopularTvShows() {
+        const url = API_TV.TvShows.getPopularTvShows;
+        const formattedUrl = formatUrlPageGener({ url, page: dataPage, gener: genreFilter });
+        console.log(`Fetching popular TV shows from URL: ${formattedUrl}`);
+        const response = await fetch(formattedUrl, { signal });
+        const data = await response.json();
+        return data.results;
+    }
+
+    switch (type) {
+        case 'MOVIES':
+            switch (action) {
+                case tmdbActions.getPopular:
+                    return getPopularMovies();
+                default:
+                    throw new Error('Invalid action for MOVIES');
+            }
+        case 'TV_SHOWS':
+            switch (action) {
+                case tmdbActions.getPopular:
+                    return getPopularTvShows();
+                default:
+                    throw new Error('Invalid action for TV_SHOWS');
+            }
+        default:
+            throw new Error('Invalid type');
+    }
+};

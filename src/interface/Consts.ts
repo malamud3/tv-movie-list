@@ -75,7 +75,10 @@ export const Movie_genres: { [key: number]: string } = {
 };
 
 
-export enum tmdbTypes {
-        MOVIES = '1',
-        TV_SHOWS = '2',
+export enum tmdbActions {
+        getPopular = 'getPopular',
+        getTrending = 'getTrending',
+        getUpcoming = 'getUpcoming',
+        getTopRated = 'getTopRated',
+        getRecentlyAdded = 'getRecentlyAdded'
 }
