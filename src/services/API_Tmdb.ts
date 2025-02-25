@@ -34,7 +34,7 @@ const getPopularTvShows = async (dataPage: number, genreFilter: number, signal?:
 
 export const API_tmdb = async (props: tmdbAPIProps) => {
     const { queryKey, dataPage = 1, genreFilter = -1, signal } = props;
-    const [type, action] = [...queryKey] as [string, tmdbActions]; // ממירים ל-array רגיל
+    const [type, action] = [...queryKey];
 
 
     if (type === 'MOVIES') {
