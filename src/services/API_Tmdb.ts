@@ -2,7 +2,7 @@ import { API_TV, tmdbActions } from '../interface/Consts';
 import { formatUrlPageGener } from '../util/TmdbUrlFormating';
 
 type tmdbAPIProps = {
-    queryKey: string[];
+    queryKey: readonly [string, tmdbActions];
     dataPage: number;
     genreFilter?: number;
     query?: string;
@@ -34,8 +34,8 @@ const getPopularTvShows = async (dataPage: number, genreFilter: number, signal?:
 
 export const API_tmdb = async (props: tmdbAPIProps) => {
     const { queryKey, dataPage = 1, genreFilter = -1, signal } = props;
-    const type = queryKey[0];
-    const action = queryKey[1];
+    const [type, action] = [...queryKey] as [string, tmdbActions]; // ממירים ל-array רגיל
+
 
     if (type === 'MOVIES') {
         if (action === tmdbActions.getPopular) {

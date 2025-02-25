@@ -1,4 +1,3 @@
-import { tmdbTypes } from './Consts'
 
 export type Show = {
     id: number;

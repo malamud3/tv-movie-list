@@ -1,23 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
 import { API_tmdb } from '../services/API_Tmdb';
 import { tmdbActions } from '../interface/Consts';
-
-const fetchPopularMovies = async ({ signal }: { signal: AbortSignal }) => {
-  return API_tmdb({
-    queryKey: ['MOVIES', tmdbActions.getPopular],
-    dataPage: 1,
-    signal,
-  });
-};
+import { Show } from '../interface/TmdbTypes';
 
 export default function HomePage() {
+  const queryKey: [string, tmdbActions] = ['MOVIES', tmdbActions.getPopular];
+
   const {
     data: movies,
     isLoading,
     error,
-  } = useQuery<{ id: number; title: string }[]>({
-    queryKey: ['MOVIES', tmdbActions.getPopular],
-    queryFn: fetchPopularMovies,
+  } = useQuery<Show[]>({
+    queryKey,
+    queryFn: ({ signal }) =>
+      API_tmdb({
+        signal,
+        queryKey,
+        dataPage: 1,
+      }),
   });
 
   return (
@@ -28,7 +28,7 @@ export default function HomePage() {
         {error && <p>Error fetching movies.</p>}
         {movies && (
           <ul>
-            {movies.map((movie: { id: number; title: string }) => (
+            {movies.map((movie: Show) => (
               <li key={movie.id}>{movie.title}</li>
             ))}
           </ul>
