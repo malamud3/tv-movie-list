@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { API_tmdb } from '../services/API_Tmdb';
 import { tmdbActions } from '../interface/Consts';
 import { Show } from '../interface/TmdbTypes';
+import { ImgCell } from '../components/ImgCell/ImgCell';
 
 export default function HomePage() {
   const queryKey: [string, tmdbActions] = ['MOVIES', tmdbActions.getPopular];
@@ -26,6 +27,7 @@ export default function HomePage() {
         <h2>Popular Movies</h2>
         {isLoading && <p>Loading movies...</p>}
         {error && <p>Error fetching movies.</p>}
+        {movies && <ImgCell posterPath={movies[0].poster_path} />}
         {movies && (
           <ul>
             {movies.map((movie: Show) => (

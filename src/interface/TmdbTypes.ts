@@ -11,6 +11,12 @@ export type Show = {
     genre_ids: number[];
 }
 
+export type ShowViewModel = {
+    posterURL: string;
+    showName: string;
+    dateRelease: string;
+}
+
 export type upComingShow = {
     first_air_date: string;
     id: number;
