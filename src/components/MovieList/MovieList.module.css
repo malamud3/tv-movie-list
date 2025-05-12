@@ -1,0 +1,15 @@
+/* components/HorizontalMovieList/HorizontalMovieList.module.css */
+
+.list {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding: 1rem 0;
+  list-style: none;
+  margin: 0;
+  scrollbar-width: thin;
+}
+
+.item {
+  flex: 0 0 auto;
+}

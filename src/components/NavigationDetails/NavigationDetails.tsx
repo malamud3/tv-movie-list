@@ -1,40 +1,16 @@
-import { NavLink } from 'react-router-dom';
-import classes from './NavigationDetails.module.css';
+// DetailLayout.tsx
+import { Outlet } from 'react-router-dom';
+import MovieDetailsPage from '../../pages/MovieDetailsPage';
 
-function NavigationDetails() {
+function DetailLayout() {
   return (
-    <header className={classes.header}>
-      <nav>
-        <ul className={classes.list}>
-          <li>
-            <NavLink
-              to="/"
-              className={({ isActive }) => (isActive ? classes.active : '')}
-            >
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/movies"
-              className={({ isActive }) => (isActive ? classes.active : '')}
-            >
-              Movies
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/shows"
-              className={({ isActive }) => (isActive ? classes.active : '')}
-            >
-              Shows
-            </NavLink>
-          </li>
-        </ul>
-      </nav>
-      <h1>Movie Details</h1>
-    </header>
+    <>
+      <MovieDetailsPage />
+      <main className="detail-content">
+        <Outlet />
+      </main>
+    </>
   );
 }
 
-export default NavigationDetails;
+export default DetailLayout;

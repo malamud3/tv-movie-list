@@ -1,4 +1,3 @@
-// ImgCell.tsx
 import classes from './ImgCell.module.css';
 
 type MovieCardProps = {

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { API_tmdb } from '../services/API_Tmdb';
 import { tmdbActions } from '../interface/Consts';
 import { Show } from '../interface/TmdbTypes';
-import { ImgCell } from '../components/ImgCell/ImgCell';
+import { MovieList } from '../components/MovieList/MovieList';
 
 export default function HomePage() {
   const queryKey: [string, tmdbActions] = ['MOVIES', tmdbActions.getPopular];
@@ -22,21 +22,18 @@ export default function HomePage() {
   });
 
   return (
-    <>
-      <main>
-        <h2>Popular Movies</h2>
-        {isLoading && <p>Loading movies...</p>}
-        {error && <p>Error fetching movies.</p>}
-        {movies ? (
-          <ul style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-            {movies.map((movie) => (
-              <li key={movie.id}>
-                <ImgCell posterPath={movie.poster_path} />
-              </li>
-            ))}
-          </ul>
-        ) : null}
-      </main>
-    </>
+    <main>
+      <h2>Popular Movies</h2>
+      {isLoading ? (
+        <p>Loading movies...</p>
+      ) : error ? (
+        <p>
+          Error fetching movies:{' '}
+          {error instanceof Error ? error.message : 'Unknown error'}
+        </p>
+      ) : (
+        movies && <MovieList movies={movies} />
+      )}
+    </main>
   );
 }
