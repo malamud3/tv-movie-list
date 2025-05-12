@@ -1,0 +1,20 @@
+.row {
+  display: flex;
+  overflow-x: auto; /* Enables horizontal scrolling */
+  gap: 16px; /* Adds spacing between ImgCell components */
+  padding: 16px; /* Adds padding around the row */
+  scroll-behavior: smooth; /* Smooth scrolling effect */
+}
+
+.row::-webkit-scrollbar {
+  height: 8px; /* Height of the horizontal scrollbar */
+}
+
+.row::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the scrollbar thumb */
+  border-radius: 4px; /* Rounded corners for the scrollbar thumb */
+}
+
+.row::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Darker color on hover */
+}

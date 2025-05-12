@@ -27,14 +27,15 @@ export default function HomePage() {
         <h2>Popular Movies</h2>
         {isLoading && <p>Loading movies...</p>}
         {error && <p>Error fetching movies.</p>}
-        {movies && <ImgCell posterPath={movies[0].poster_path} />}
-        {movies && (
-          <ul>
-            {movies.map((movie: Show) => (
-              <li key={movie.id}>{movie.title}</li>
+        {movies ? (
+          <ul style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+            {movies.map((movie) => (
+              <li key={movie.id}>
+                <ImgCell posterPath={movie.poster_path} />
+              </li>
             ))}
           </ul>
-        )}
+        ) : null}
       </main>
     </>
   );

@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import classes from './MainToolBar.module.css';
+import classes from './MainNavigation.module.css';
 
 function MainNavigation() {
   return (

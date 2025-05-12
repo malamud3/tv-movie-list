@@ -5,12 +5,16 @@ type MovieCardProps = {
   title?: string;
 };
 
-export const ImgCell = ({ posterPath }: MovieCardProps) => {
+export const ImgCell = ({ posterPath, title }: MovieCardProps) => {
   const imageUrl = `https://image.tmdb.org/t/p/w500${posterPath}`;
 
   return (
     <div className={classes.card}>
-      <img src={imageUrl} alt={'title'} className={classes.image} />
+      <img
+        src={imageUrl}
+        alt={title || 'Movie Poster'}
+        className={classes.image}
+      />
     </div>
   );
 };
