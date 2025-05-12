@@ -1,8 +1,9 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import RootLayout from './routers/RootLayout';
+import RootLayout from './layouts/RootLayout';
 import HomePage from './pages/HomePage';
-import DetailLayout from './routers/DetailLayout';
+import DetailLayout from './layouts/DetailLayout';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import MovieDetailsPage from './pages/MovieDetailsPage';
 
 const queryClient = new QueryClient();
 
