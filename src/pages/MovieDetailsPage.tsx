@@ -1,22 +1,40 @@
-const MovieDetailsPage = () => {
-  // Example movie data
-  const movie = {
-    title: 'Inception',
-    releaseYear: 2010,
-    director: 'Christopher Nolan',
-    description:
-      'A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.',
-  };
+import { Show } from '../interface/TmdbTypes';
+import Modal from '../components/UI/Modal.jsx';
+
+type MovieModalProps = {
+  movie: Show;
+  onClose: () => void;
+};
+
+const MovieModal = ({ movie, onClose }: MovieModalProps) => {
+  const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>
-        {movie.title} ({movie.releaseYear})
-      </h1>
-      <h3>Directed by: {movie.director}</h3>
-      <p>{movie.description}</p>
-    </div>
+    <Modal onClose={onClose}>
+      <div className="modal-content">
+        <h2>{movie.title || movie.title}</h2>
+        <div className="flex">
+          <img
+            src={imageUrl}
+            alt={movie.title || movie.title || 'Movie Poster'}
+          />
+          <div className="details">
+            <p>
+              <strong>Rating:</strong> {movie.vote_average}/10 (
+              {movie.vote_count} votes)
+            </p>
+            <p>
+              <strong>Release Date:</strong>{' '}
+              {movie.release_date || movie.first_air_date}
+            </p>
+            <p>
+              <strong>Overview:</strong> {movie.overview}
+            </p>
+          </div>
+        </div>
+      </div>
+    </Modal>
   );
 };
 
-export default MovieDetailsPage;
+export default MovieModal;

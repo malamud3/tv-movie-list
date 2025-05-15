@@ -18,12 +18,12 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: '/movie/:id', // דף פרטי סרט
+        path: '/movie/:id',
         element: <DetailLayout />,
         children: [
           {
             index: true,
-            element: <MovieDetailsPage />, // דף פרטי סרט
+            element: <MovieDetailsPage />,
           },
         ],
       },
