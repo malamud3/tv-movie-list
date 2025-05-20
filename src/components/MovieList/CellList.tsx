@@ -5,12 +5,12 @@ import styles from './MovieList.module.css';
 
 const ImgCell = lazy(() => import('../ImgCell/ImgCell'));
 
-type MovieListProps = {
+type CellListProps = {
   movies: Show[];
   setLastItemRef?: (node: HTMLLIElement | null) => void; // <-- add this prop
 };
 
-export const MovieList = ({ movies, setLastItemRef }: MovieListProps) => {
+export const CellList = ({ movies, setLastItemRef }: CellListProps) => {
   return (
     <ul className={styles.list}>
       {movies.map((movie, index) => {
