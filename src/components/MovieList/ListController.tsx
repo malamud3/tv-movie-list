@@ -5,6 +5,7 @@ import ErrorBlock from '../UI/ErrorBlock/ErrorBlock';
 import { CellList } from '../MovieList/CellList';
 import MovieDetailsModal from '../UI/Model/MovieDetailsModal';
 import { tmdbActions } from '../../interface/Consts';
+import { useMemo } from 'react';
 
 interface ListControllerProps {
   type: string;
@@ -28,7 +29,7 @@ export default function ListController({
     error,
   } = usePaginatedContent([type, fetchFunction]);
 
-  const items: Show[] = pages?.pages.flat() || [];
+  const items: Show[] = useMemo(() => pages?.pages.flat() || [], [pages]);
 
   const { lastItemRef } = useInfiniteScroll({
     hasNextPage,
@@ -36,7 +37,10 @@ export default function ListController({
     fetchNextPage,
   });
 
-  const selectedItem = items.find((item) => item.id === selectedId);
+  const selectedItem = useMemo(
+    () => items.find((item) => item.id === selectedId),
+    [items, selectedId]
+  );
 
   return (
     <section>
