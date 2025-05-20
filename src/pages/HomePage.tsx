@@ -60,7 +60,6 @@ export default function HomePage() {
             <MovieList movies={movies} setLastItemRef={lastItemRef} />
           )}
           {isFetchingNextPage && <p>Loading more movies...</p>}
-          <p>Current loaded pages: {data?.pages.length || 0}</p>
         </>
       )}
       {selectedMovie && <MovieDetailsModal movie={selectedMovie} />}
