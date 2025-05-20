@@ -7,30 +7,30 @@ const ImgCell = lazy(() => import('../ImgCell/ImgCell'));
 
 type CellListProps = {
   movies: Show[];
-  rows?: number; // Optional prop with default value
+  col?: number; // Optional prop with default value
   setLastItemRef?: (node: HTMLLIElement | null) => void;
 };
 
 export const CellList = ({
   movies,
-  rows = 1,
+  col = 1,
   setLastItemRef,
 }: CellListProps) => {
-  const itemsPerRow = Math.ceil(movies.length / rows);
+  const itemWidth = `calc(100% / ${col})`;
 
   return (
     <ul className={styles.list}>
       {movies.map((movie, index) => {
-        const isLastItem = index === movies.length - 2;
+        const isLastItem = index === movies.length - 1;
         return (
           <li
-            key={movie.id}
+            key={`${movie.id}-${index}`}
             className={styles.item}
-            style={{ flexBasis: `${100 / itemsPerRow}%` }} // Adjust width per row
+            style={{ width: itemWidth }}
             ref={isLastItem ? setLastItemRef : undefined}
           >
-            <Link to={`/movies/${movie.id}`}>
-              <Suspense fallback={<div>Loading...</div>}>
+            <Link to={`/${movie.id}`} state={{ item: movie }}>
+              <Suspense fallback={<div className={styles.imgPlaceholder} />}>
                 <ImgCell posterPath={movie.poster_path} title={movie.title} />
               </Suspense>
             </Link>

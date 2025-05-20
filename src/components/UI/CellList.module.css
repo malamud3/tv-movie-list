@@ -25,13 +25,6 @@
   background: transparent;
 }
 
-.item {
-  flex: 0 0 auto;
-  width: clamp(150px, 40vw, 250px); /* Responsive width */
-  scroll-snap-align: start;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
 .item:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
