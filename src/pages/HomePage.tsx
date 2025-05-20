@@ -1,57 +1,56 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { API_tmdb } from '../services/API_Tmdb';
 import { tmdbActions } from '../interface/Consts';
 import { Show } from '../interface/TmdbTypes';
 import { MovieList } from '../components/MovieList/MovieList';
 import MovieDetailsModal from '../components/UI/Model/MovieDetailsModal';
 import ErrorBlock from '../components/UI/ErrorBlock/ErrorBlock';
 import { useInfiniteScroll } from '../util/hooks/useInfiniteScroll';
+import { usePaginatedContent } from '../util/hooks/usePaginatedContent';
 
 export default function HomePage() {
-  const queryKey: [string, tmdbActions] = ['MOVIES', tmdbActions.getPopular];
   const { movieId } = useParams();
 
+  // Fetch popular movies
   const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-    error,
-  } = useInfiniteQuery<Show[], Error>({
-    queryKey,
-    queryFn: ({ pageParam = 1, signal }) =>
-      API_tmdb({
-        signal,
-        queryKey,
-        dataPage: Number(pageParam),
-      }),
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) =>
-      lastPage.length > 0 ? allPages.length + 1 : undefined,
-  });
+    data: moviePages,
+    fetchNextPage: fetchNextMovies,
+    hasNextPage: hasMoreMovies,
+    isFetchingNextPage: isFetchingMovies,
+    isLoading: isLoadingMovies,
+    error: movieError,
+  } = usePaginatedContent(['MOVIES', tmdbActions.getPopular]);
 
-  const movies: Show[] = data?.pages.flat() || [];
+  // Fetch popular TV shows (if needed)
+  const {
+    data: tvShowPages,
+    fetchNextPage: fetchNextTVShows,
+    hasNextPage: hasMoreTVShows,
+    isFetchingNextPage: isFetchingTVShows,
+    isLoading: isLoadingTVShows,
+    error: tvShowError,
+  } = usePaginatedContent(['TV_SHOWS', tmdbActions.getPopular]);
 
+  const movies: Show[] = moviePages?.pages.flat() || [];
   const selectedMovie = movies.find((movie) => movie.id === Number(movieId));
 
   const { lastItemRef } = useInfiniteScroll({
-    hasNextPage,
-    isFetchingNextPage,
-    fetchNextPage,
+    hasNextPage: hasMoreMovies,
+    isFetchingNextPage: isFetchingMovies,
+    fetchNextPage: fetchNextMovies,
   });
 
   return (
     <main>
       <h2>Popular Movies</h2>
-      {isLoading ? (
+      {isLoadingMovies ? (
         <p>Loading movies...</p>
-      ) : error ? (
+      ) : movieError ? (
         <ErrorBlock
           title="Failed to load movies"
           message={
-            error instanceof Error ? error.message : 'Unknown error occurred'
+            movieError instanceof Error
+              ? movieError.message
+              : 'Unknown error occurred'
           }
         />
       ) : (
@@ -59,7 +58,7 @@ export default function HomePage() {
           {movies.length > 0 && (
             <MovieList movies={movies} setLastItemRef={lastItemRef} />
           )}
-          {isFetchingNextPage && <p>Loading more movies...</p>}
+          {isFetchingMovies && <p>Loading more movies...</p>}
         </>
       )}
       {selectedMovie && <MovieDetailsModal movie={selectedMovie} />}
