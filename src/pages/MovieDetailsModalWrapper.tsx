@@ -4,14 +4,12 @@ import MovieDetailsModal from '../components/UI/Model/MovieDetailsModal';
 import { Show } from '../interface/TmdbTypes';
 
 export default function MovieDetailsModalWrapper() {
-  console.log('hi');
-
   const { itemId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const stateItem = location.state?.item as Show | undefined;
+  const stateItem = location.state?.item;
 
   const cachedItems =
     queryClient.getQueryData<Show[]>(['MOVIES']) ||

@@ -10,12 +10,11 @@
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
   overflow: hidden;
 
-  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 
-  width: clamp(300px, 90vw, 500px);
+  width: clamp(300px, 90vw, 700px);
   max-height: 90vh;
   box-sizing: border-box;
 
