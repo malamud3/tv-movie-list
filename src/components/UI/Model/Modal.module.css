@@ -1,0 +1,80 @@
+.modal {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: clamp(300px, 90vw, 500px);
+  max-height: 90vh;
+  box-sizing: border-box;
+
+  padding: 1rem; /* Added padding inside modal */
+}
+
+/* Dimmed background */
+.modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Scrollable content */
+.modalContent {
+  overflow-y: auto;
+  max-height: calc(90vh - 2rem); /* Account for padding */
+  box-sizing: border-box;
+  padding-right: 0.5rem; /* Prevent content under scrollbar */
+}
+
+/* Close button */
+.closeButton {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  z-index: 1;
+  transition: color 0.2s ease;
+}
+
+.closeButton:hover {
+  color: #000;
+}
+
+/* Responsive tweaks */
+@media (max-width: 720px) {
+  .modal {
+    width: 95vw;
+    padding: 0.75rem;
+  }
+
+  .closeButton {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .modal {
+    padding: 0.5rem;
+  }
+
+  .modalContent {
+    padding: 0.5rem 0.25rem 0.5rem 0;
+  }
+
+  .closeButton {
+    font-size: 1.25rem;
+  }
+}

@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  padding: 0.5rem;
+  background: transparent;
+}
+
+.poster {
+  width: 200px;
+  height: 300px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.details {
+  max-width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'San Francisco',
+    'Helvetica Neue', sans-serif;
+  color: #1c1c1e;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.details p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.details strong {
+  font-weight: 600;
+  color: #444;
+}

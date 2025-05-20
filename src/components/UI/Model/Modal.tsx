@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import styles from './Modal.module.css';
 
 interface ModalProps {
   children: React.ReactNode;
@@ -25,8 +26,15 @@ export default function Modal({ children, onClose }: ModalProps) {
   }, []);
 
   return createPortal(
-    <dialog className="modal" ref={dialog} onClose={onClose}>
-      {children}
+    <dialog className={styles.modal} ref={dialog} onClose={onClose}>
+      <button
+        className={styles.closeButton}
+        onClick={onClose}
+        aria-label="Close Modal"
+      >
+        &times;
+      </button>
+      <div className={styles.modalContent}>{children}</div>
     </dialog>,
     document.getElementById('modal') as HTMLElement
   );

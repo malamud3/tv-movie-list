@@ -1,7 +1,7 @@
 import { Show } from '../../../interface/TmdbTypes.ts';
 import Modal from './Modal.tsx';
 import { useNavigate } from 'react-router-dom';
-import styles from './NavigationDetails.module.css';
+import styles from './MovieDetailsModal.module.css';
 
 type MovieDetailsModalProps = {
   movie: Show;
@@ -16,7 +16,6 @@ const MovieDetailsModal = ({ movie }: MovieDetailsModalProps) => {
 
   return (
     <Modal onClose={() => navigate(-1)}>
-      <h2 className={styles.title}>{movie.title ?? 'Untitled Movie'}</h2>
       <div className={styles.container}>
         <img
           src={imageUrl}
@@ -26,6 +25,7 @@ const MovieDetailsModal = ({ movie }: MovieDetailsModalProps) => {
           draggable={false}
         />
         <div className={styles.details}>
+          <h2 className={styles.title}>{movie.title ?? 'Untitled Movie'}</h2>
           <p>
             <strong>Rating:</strong>{' '}
             {movie.vote_average !== undefined
