@@ -11,5 +11,24 @@ export const ListConfing = [
         title: 'Popular TV Shows',
         fetchFunction: tmdbActions.getPopular,
     },
-    // Add more sections here
+    {
+        id: 'MOVIES',
+        title: 'Trending Movies',
+        fetchFunction: tmdbActions.getTrending,
+    },
+    {
+        id: 'TV_SHOWS',
+        title: 'Trending TV Shows',
+        fetchFunction: tmdbActions.getTrending,
+    },
+    {
+        id: 'MOVIES',
+        title: 'Top Rated Movies',
+        fetchFunction: tmdbActions.getTopRated,
+    },
+    {
+        id: 'TV_SHOWS',
+        title: 'Top Rated TV Shows',
+        fetchFunction: tmdbActions.getTopRated,
+    },
 ];
