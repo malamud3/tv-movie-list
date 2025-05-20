@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  flex-wrap: nowrap; /* לא לשבור שורה */
+}
+
+.poster {
+  width: 200px; /* גודל רוחב קבוע */
+  height: 300px; /* גובה קבוע */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  user-select: none;
+  object-fit: cover; /* שומר על יחס ממדים וממלא את הקופסה */
+  flex-shrink: 0; /* למנוע שהתמונה תצטמצם */
+}
+
+.details {
+  max-width: 600px;
+  overflow-wrap: break-word;
+}

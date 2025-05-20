@@ -11,14 +11,16 @@ export default function Modal({ children, onClose }: ModalProps) {
 
   useEffect(() => {
     const modal = dialog.current;
-    if (modal) {
-      modal.showModal();
+    if (!modal) return;
+
+    if (!modal.open) {
+      requestAnimationFrame(() => {
+        modal.showModal();
+      });
     }
 
     return () => {
-      if (modal) {
-        modal.close();
-      }
+      if (modal.open) modal.close();
     };
   }, []);
 

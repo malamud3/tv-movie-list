@@ -1,13 +1,15 @@
-// HomePage.tsx
 import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
 import { API_tmdb } from '../services/API_Tmdb';
 import { tmdbActions } from '../interface/Consts';
 import { Show } from '../interface/TmdbTypes';
 import { MovieList } from '../components/MovieList/MovieList';
+import MovieDetailsModal from '../components/UI/Model/MovieDetailsModal';
 import ErrorBlock from '../components/UI/ErrorBlock/ErrorBlock';
 
 export default function HomePage() {
   const queryKey: [string, tmdbActions] = ['MOVIES', tmdbActions.getPopular];
+  const { movieId } = useParams(); // Get the movie ID from the URL
 
   const {
     data: movies,
@@ -23,6 +25,8 @@ export default function HomePage() {
       }),
   });
 
+  const selectedMovie = movies?.find((movie) => movie.id === Number(movieId)); // Find the selected movie
+
   return (
     <main>
       <h2>Popular Movies</h2>
@@ -36,12 +40,9 @@ export default function HomePage() {
           }
         />
       ) : (
-        movies && (
-          <>
-            <MovieList movies={movies} />
-          </>
-        )
+        movies && <MovieList movies={movies} />
       )}
+      {selectedMovie && <MovieDetailsModal movie={selectedMovie} />}
     </main>
   );
 }
