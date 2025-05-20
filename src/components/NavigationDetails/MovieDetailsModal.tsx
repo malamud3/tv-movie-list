@@ -1,31 +1,29 @@
-import { Show } from '../interface/TmdbTypes';
-import Modal from '../components/UI/Modal.jsx';
+import { useNavigate } from 'react-router-dom';
+import { Show } from '../../interface/TmdbTypes.ts';
+import Modal from '../UI/Modal.tsx';
 
-type MovieModalProps = {
+type MovieDetailsModalProps = {
   movie: Show;
   onClose: () => void;
 };
 
-const MovieModal = ({ movie, onClose }: MovieModalProps) => {
+const MovieDetailsModal = ({ movie }: MovieDetailsModalProps) => {
+  const navigate = useNavigate();
   const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
 
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={() => navigate('../')}>
       <div className="modal-content">
-        <h2>{movie.title || movie.title}</h2>
+        <h2>{movie.title}</h2>
         <div className="flex">
-          <img
-            src={imageUrl}
-            alt={movie.title || movie.title || 'Movie Poster'}
-          />
+          <img src={imageUrl} alt={movie.title || 'Movie Poster'} />
           <div className="details">
             <p>
               <strong>Rating:</strong> {movie.vote_average}/10 (
               {movie.vote_count} votes)
             </p>
             <p>
-              <strong>Release Date:</strong>{' '}
-              {movie.release_date || movie.first_air_date}
+              <strong>Release Date:</strong> {movie.release_date || ''}
             </p>
             <p>
               <strong>Overview:</strong> {movie.overview}
@@ -37,4 +35,4 @@ const MovieModal = ({ movie, onClose }: MovieModalProps) => {
   );
 };
 
-export default MovieModal;
+export default MovieDetailsModal;

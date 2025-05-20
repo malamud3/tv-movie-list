@@ -1,3 +1,4 @@
+// ImgCell.tsx
 import classes from './ImgCell.module.css';
 
 type MovieCardProps = {
@@ -12,8 +13,8 @@ export const ImgCell = ({ posterPath, title, onClick }: MovieCardProps) => {
   return (
     <div
       className={classes.card}
-      onClick={onClick}
       style={{ cursor: onClick ? 'pointer' : 'default' }}
+      onClick={onClick}
     >
       <img
         src={imageUrl}

@@ -1,13 +1,12 @@
-import { useState } from 'react';
+// HomePage.tsx
 import { useQuery } from '@tanstack/react-query';
 import { API_tmdb } from '../services/API_Tmdb';
 import { tmdbActions } from '../interface/Consts';
 import { Show } from '../interface/TmdbTypes';
 import { MovieList } from '../components/MovieList/MovieList';
-import MovieModal from '../pages/MovieDetailsPage';
+import ErrorBlock from '../components/UI/ErrorBlock/ErrorBlock';
 
 export default function HomePage() {
-  const [selectedMovie, setSelectedMovie] = useState<Show | null>(null);
   const queryKey: [string, tmdbActions] = ['MOVIES', tmdbActions.getPopular];
 
   const {
@@ -24,32 +23,24 @@ export default function HomePage() {
       }),
   });
 
-  const handleSelectMovie = (movie: Show) => {
-    setSelectedMovie(movie);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedMovie(null);
-  };
-
   return (
     <main>
       <h2>Popular Movies</h2>
       {isLoading ? (
         <p>Loading movies...</p>
       ) : error ? (
-        <p>
-          Error fetching movies:{' '}
-          {error instanceof Error ? error.message : 'Unknown error'}
-        </p>
+        <ErrorBlock
+          title="Failed to load movies"
+          message={
+            error instanceof Error ? error.message : 'Unknown error occurred'
+          }
+        />
       ) : (
         movies && (
-          <MovieList movies={movies} onSelectMovie={handleSelectMovie} />
+          <>
+            <MovieList movies={movies} />
+          </>
         )
-      )}
-
-      {selectedMovie && (
-        <MovieModal movie={selectedMovie} onClose={handleCloseModal} />
       )}
     </main>
   );

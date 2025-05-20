@@ -7,7 +7,6 @@ const API_KEY: string = import.meta.env.VITE_API_KEY || '';
 if (!API_KEY) {
         throw new Error('API_KEY is not defined in the environment variables');
 }
-console.log('API_KEY:', API_KEY);
 
 const baseURL = "https://api.themoviedb.org/3/";
 const imgURL = "https://image.tmdb.org/t/p/w500/";

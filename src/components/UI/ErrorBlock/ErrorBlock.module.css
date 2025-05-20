@@ -1,0 +1,25 @@
+.error-block {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 4px;
+  background-color: #ffecec;
+  border: 1px solid #ffb3b3;
+  color: #d8000c;
+  margin: 1rem 0;
+}
+
+.error-block-icon {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.error-block-text h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.error-block-text p {
+  margin: 0.5rem 0 0;
+}
