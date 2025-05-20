@@ -1,5 +1,3 @@
-/* components/HorizontalMovieList/HorizontalMovieList.module.css */
-
 .list {
   display: flex;
   overflow-x: auto;
@@ -8,8 +6,43 @@
   list-style: none;
   margin: 0;
   scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+}
+
+.list::-webkit-scrollbar {
+  height: 8px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.list::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .item {
   flex: 0 0 auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.item a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
 }

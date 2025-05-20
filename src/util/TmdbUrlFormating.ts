@@ -7,7 +7,7 @@ export type formatUrlPageGanerProps = {
 
 export const formatUrlPageGener = (props: formatUrlPageGanerProps): string => {
 
-    let urlString = `${props.url}?page=${props.page}`;
+    let urlString = `${props.url}&page=${props.page}`;
 
     if (props.gener != -1) {
         urlString += `&with_genres=${props.gener}`

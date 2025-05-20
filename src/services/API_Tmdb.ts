@@ -21,7 +21,6 @@ const fetchFromTmdb = async (url: string, signal?: AbortSignal) => {
 const getPopularMovies = async (dataPage: number, genreFilter: number, signal?: AbortSignal) => {
     const url = API_TV.Movies.getPopularMovies;
     const formattedUrl = formatUrlPageGener({ url, page: dataPage, gener: genreFilter });
-    console.log(`Fetching popular movies from URL: ${formattedUrl}`);
     return fetchFromTmdb(formattedUrl, signal);
 };
 
