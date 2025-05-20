@@ -7,7 +7,6 @@ import MovieDetailsModal from '../UI/Model/MovieDetailsModal';
 import { tmdbActions } from '../../interface/Consts';
 
 interface ListControllerProps {
-  id: number;
   type: string;
   title: string;
   fetchFunction: tmdbActions;
