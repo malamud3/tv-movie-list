@@ -4,19 +4,24 @@ import ListController from '../components/MovieList/ListController';
 
 export default function HomePage() {
   const { movieId } = useParams();
-  const selectedId = movieId ? Number(movieId) : undefined;
+  const selectedId =
+    movieId && !isNaN(Number(movieId)) ? Number(movieId) : undefined;
 
   return (
     <main>
-      {ListConfing.map((section) => (
-        <ListController
-          key={section.id}
-          id={section.id}
-          title={section.title}
-          fetchFunction={section.fetchFunction}
-          selectedId={selectedId}
-        />
-      ))}
+      {ListConfing?.length > 0 ? (
+        ListConfing.map((section) => (
+          <ListController
+            key={section.id}
+            type={section.type} // Pass the 'type' property
+            title={section.title}
+            fetchFunction={section.fetchFunction}
+            selectedId={selectedId}
+          />
+        ))
+      ) : (
+        <p>No sections available</p>
+      )}
     </main>
   );
 }

@@ -7,14 +7,15 @@ import MovieDetailsModal from '../UI/Model/MovieDetailsModal';
 import { tmdbActions } from '../../interface/Consts';
 
 interface ListControllerProps {
-  id: string;
+  id: number;
+  type: string;
   title: string;
   fetchFunction: tmdbActions;
   selectedId?: number;
 }
 
 export default function ListController({
-  id,
+  type,
   title,
   fetchFunction,
   selectedId,
@@ -26,7 +27,7 @@ export default function ListController({
     isFetchingNextPage,
     isLoading,
     error,
-  } = usePaginatedContent([id, fetchFunction]);
+  } = usePaginatedContent([type, fetchFunction]);
 
   const items: Show[] = pages?.pages.flat() || [];
 
@@ -50,8 +51,10 @@ export default function ListController({
         />
       ) : (
         <>
-          {items.length > 0 && (
+          {items.length > 0 ? (
             <CellList movies={items} setLastItemRef={lastItemRef} />
+          ) : (
+            <p>No items available</p>
           )}
           {isFetchingNextPage && <p>Loading more...</p>}
         </>

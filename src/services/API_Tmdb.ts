@@ -1,5 +1,5 @@
 import { API_TV, tmdbActions } from '../interface/Consts';
-import { formatUrlPageGener } from '../util/TmdbUrlFormating';
+import { formatUrlPageGenre } from '../util/TmdbUrlFormating';
 
 type TmdbAPIProps = {
     queryKey: readonly [string, tmdbActions];
@@ -36,10 +36,10 @@ const getPopular = async (type: 'MOVIES' | 'TV_SHOWS', options: TmdbAPIProps) =>
         ? API_TV.Movies.getPopularMovies
         : API_TV.TvShows.getPopularTvShows;
 
-    const formattedUrl = formatUrlPageGener({
+    const formattedUrl = formatUrlPageGenre({
         url,
         page: options.dataPage,
-        gener: options.genreFilter ?? -1
+        genre: options.genreFilter ?? -1
     });
 
     return fetchFromTmdb(formattedUrl, options.signal);
@@ -49,7 +49,7 @@ const getTrending = async (type: 'MOVIES' | 'TV_SHOWS', options: TmdbAPIProps) =
         ? API_TV.Movies.getTrendingMovies
         : API_TV.TvShows.getTrendingTvShows;
 
-    const formattedUrl = formatUrlPageGener({ url, page: options.dataPage, gener: options.genreFilter ?? -1 });
+    const formattedUrl = formatUrlPageGenre({ url, page: options.dataPage, genre: options.genreFilter ?? -1 });
     return fetchFromTmdb(formattedUrl, options.signal);
 };
 
@@ -58,7 +58,7 @@ const getTopRated = async (type: 'MOVIES' | 'TV_SHOWS', options: TmdbAPIProps) =
         ? API_TV.Movies.getTopRatedMovies
         : API_TV.TvShows.getTopRatedTvShows;
 
-    const formattedUrl = formatUrlPageGener({ url, page: options.dataPage, gener: options.genreFilter ?? -1 });
+    const formattedUrl = formatUrlPageGenre({ url, page: options.dataPage, genre: options.genreFilter ?? -1 });
     return fetchFromTmdb(formattedUrl, options.signal);
 }
 
