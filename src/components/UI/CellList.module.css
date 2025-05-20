@@ -1,0 +1,52 @@
+.list {
+  display: flex;
+  overflow-x: auto; /* Enable scrolling */
+  gap: 1rem; /* Space between items */
+  padding: 1rem 0; /* Padding top & bottom only (no left padding) */
+  list-style: none;
+  margin: 0;
+
+  /* Scrollbar styling (optional) */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #888 transparent; /* Firefox */
+}
+
+/* Custom scrollbar for Chrome/Safari */
+.list::-webkit-scrollbar {
+  height: 8px; /* Thickness */
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: #888; /* Scrollbar color */
+  border-radius: 4px; /* Rounded corners */
+}
+
+.list::-webkit-scrollbar-track {
+  background: transparent; /* Invisible track */
+}
+
+/* Items (no extra margins/padding) */
+.item {
+  flex: 0 0 auto; /* Prevent shrinking/growing */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.item a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}

@@ -75,18 +75,16 @@ const getTopRated = async (type: 'MOVIES' | 'TV_SHOWS', options: TmdbAPIProps) =
 //         : data.results as upComingShow[];
 // };
 
-// const getRecentlyAdded = async (type: 'MOVIES' | 'TV_SHOWS', dataPage: number, genreFilter: number, signal?: AbortSignal) => {
-//     const url = type === 'MOVIES'
-//         ? API_TV.Movies.getRecentlyAddedMovies
-//         : API_TV.TvShows.getRecentlyAddedTvShows;
+const getRecentlyAdded = async (type: 'MOVIES' | 'TV_SHOWS', options: TmdbAPIProps) => {
+    const url = type === 'MOVIES'
+        ? API_TV.Movies.getRecentlyAddedMovies
+        : API_TV.TvShows.getRecentlyAddedTvShows;
 
-//     const formattedUrl = formatUrlPageGener({ url, page: dataPage, gener: genreFilter });
-//     const data = await fetchFromTmdb(formattedUrl, signal);
+    const formattedUrl = formatUrlPageGenre({ url, page: options.dataPage, genre: options.genreFilter ?? -1 });
 
-//     return type === 'MOVIES'
-//         ? mapRecentlyAddedMovieToShows(data.results as recentlyAddedMovie[])
-//         : data.results as Show[];
-// };
+    return fetchFromTmdb(formattedUrl, options.signal);
+};
+
 
 const doSearch = async (type: 'MOVIES' | 'TV_SHOWS', query: string, dataPage: number, signal?: AbortSignal) => {
     const url = type === 'MOVIES'
@@ -120,8 +118,7 @@ export const API_tmdb = async (props: TmdbAPIProps) => {
             // return getUpcoming(type, options);
             throw new Error('getUpcoming is not implemented');
         case tmdbActions.getRecentlyAdded:
-            // return getRecentlyAdded(type, options);
-            throw new Error('getRecentlyAdded is not implemented');
+            return getRecentlyAdded(type, options);
         default:
             if (action === 'search' && query) {
                 return doSearch(type, query, dataPage, signal);

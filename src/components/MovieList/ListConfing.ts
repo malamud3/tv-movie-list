@@ -37,4 +37,16 @@ export const ListConfing = [
         title: 'Top Rated TV Shows',
         fetchFunction: tmdbActions.getTopRated,
     },
+    // {
+    //     id: 1.4,
+    //     type: 'MOVIES',
+    //     title: 'Latest Movies',
+    //     fetchFunction: tmdbActions.getRecentlyAdded,
+    // },
+    // {
+    //     id: 2.4,
+    //     type: 'TV_SHOWS',
+    //     title: 'Latest TV Shows',
+    //     fetchFunction: tmdbActions.getRecentlyAdded,
+    // }
 ];

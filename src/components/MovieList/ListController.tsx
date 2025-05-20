@@ -2,7 +2,7 @@ import { Show } from '../../interface/TmdbTypes';
 import { usePaginatedContent } from '../../util/hooks/usePaginatedContent';
 import { useInfiniteScroll } from '../../util/hooks/useInfiniteScroll';
 import ErrorBlock from '../UI/ErrorBlock/ErrorBlock';
-import { CellList } from '../MovieList/CellList';
+import { CellList } from '../UI/CellList';
 import MovieDetailsModal from '../UI/Model/MovieDetailsModal';
 import { tmdbActions } from '../../interface/Consts';
 import { useMemo } from 'react';
@@ -29,8 +29,10 @@ export default function ListController({
     error,
   } = usePaginatedContent([type, fetchFunction]);
 
-  const items: Show[] = useMemo(() => pages?.pages.flat() || [], [pages]);
-
+  const items: Show[] = useMemo(
+    () => pages?.pages.flat().filter((item) => item.poster_path) || [],
+    [pages]
+  );
   const { lastItemRef } = useInfiniteScroll({
     hasNextPage,
     isFetchingNextPage,

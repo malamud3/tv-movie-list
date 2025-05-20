@@ -17,7 +17,7 @@ const Movies = {
         getUpcomingMovies: `${baseURL}movie/upcoming?api_key=${API_KEY}`,
         getPopularMovies: `${baseURL}movie/popular?api_key=${API_KEY}&language=en-US`,
         getTopRatedMovies: `${baseURL}movie/top_rated?api_key=${API_KEY}&language=en-US`,
-        getRecentlyAddedMovies: `${baseURL}discover/movie?api_key=${API_KEY}&sort_by=release_date.desc&include_adult=false&page=1&year=2023`
+        getRecentlyAddedMovies: `${baseURL}discover/movie?api_key=${API_KEY}&sort_by=release_date.desc&include_adult=false&page=1&year=2025`
 };
 
 const TvShows = {
