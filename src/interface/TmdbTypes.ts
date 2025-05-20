@@ -1,36 +1,24 @@
-
-export type Show = {
+export type BaseShow = {
     id: number;
+    poster_path: string;
+    overview: string;
+    genre_ids: number[];
+};
+
+export type Show = BaseShow & {
     title: string;
     original_title: string;
-    poster_path: string;
-    overview: string;
+    release_date: string;
     vote_count: number;
-    release_date: string;
     vote_average: number;
-    genre_ids: number[];
-}
+};
 
-export type ShowViewModel = {
-    posterURL: string;
-    showName: string;
-    dateRelease: string;
-}
-
-export type upComingShow = {
+export type upComingShow = BaseShow & {
     first_air_date: string;
-    id: number;
     name: string;
-    poster_path: string;
-    overview: string;
-    genre_ids: number[];
-}
+};
 
-export type recentlyAddedMovie = {
-    id: number;
+export type recentlyAddedMovie = BaseShow & {
     original_title: string;
-    poster_path: string;
-    overview: string;
     release_date: string;
-    genre_ids: number[];
-}
+};

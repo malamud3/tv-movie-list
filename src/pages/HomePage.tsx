@@ -1,17 +1,16 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { useCallback, useRef, useEffect } from 'react';
 import { API_tmdb } from '../services/API_Tmdb';
 import { tmdbActions } from '../interface/Consts';
 import { Show } from '../interface/TmdbTypes';
 import { MovieList } from '../components/MovieList/MovieList';
 import MovieDetailsModal from '../components/UI/Model/MovieDetailsModal';
 import ErrorBlock from '../components/UI/ErrorBlock/ErrorBlock';
+import { useInfiniteScroll } from '../util/hooks/useInfiniteScroll';
 
 export default function HomePage() {
   const queryKey: [string, tmdbActions] = ['MOVIES', tmdbActions.getPopular];
   const { movieId } = useParams();
-  const observerRef = useRef<IntersectionObserver | null>(null);
 
   const {
     data,
@@ -20,7 +19,7 @@ export default function HomePage() {
     isFetchingNextPage,
     isLoading,
     error,
-  } = useInfiniteQuery<Show[]>({
+  } = useInfiniteQuery<Show[], Error>({
     queryKey,
     queryFn: ({ pageParam = 1, signal }) =>
       API_tmdb({
@@ -34,53 +33,14 @@ export default function HomePage() {
   });
 
   const movies: Show[] = data?.pages.flat() || [];
-  const uniqueMovies = Array.from(
-    new Map(movies.map((movie) => [movie.id, movie])).values()
-  );
+
   const selectedMovie = movies.find((movie) => movie.id === Number(movieId));
 
-  // Clean up previous observer on dependencies change
-  useEffect(() => {
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
-  }, [hasNextPage, isFetchingNextPage]);
-
-  // Update the lastItemRef callback to be more robust
-  const lastItemRef = useCallback(
-    (node: HTMLLIElement | null) => {
-      if (isFetchingNextPage || !hasNextPage) return;
-
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-
-      if (node) {
-        observerRef.current = new IntersectionObserver(
-          (entries) => {
-            if (
-              entries[0].isIntersecting &&
-              hasNextPage &&
-              !isFetchingNextPage
-            ) {
-              fetchNextPage();
-            }
-          },
-          { threshold: 0.1 } // Add a small threshold
-        );
-
-        observerRef.current.observe(node);
-      }
-    },
-    [fetchNextPage, hasNextPage, isFetchingNextPage]
-  );
-  useEffect(() => {
-    console.log('Current pages:', data?.pages.length);
-    console.log('Has next page:', hasNextPage);
-    console.log('Is fetching next:', isFetchingNextPage);
-  }, [data, hasNextPage, isFetchingNextPage]);
+  const { lastItemRef } = useInfiniteScroll({
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  });
 
   return (
     <main>
@@ -97,7 +57,7 @@ export default function HomePage() {
       ) : (
         <>
           {movies.length > 0 && (
-            <MovieList movies={uniqueMovies} setLastItemRef={lastItemRef} />
+            <MovieList movies={movies} setLastItemRef={lastItemRef} />
           )}
           {isFetchingNextPage && <p>Loading more movies...</p>}
           <p>Current loaded pages: {data?.pages.length || 0}</p>
