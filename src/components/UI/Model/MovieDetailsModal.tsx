@@ -8,9 +8,6 @@ type MovieDetailsModalProps = {
 };
 
 const MovieDetailsModal = ({ movie }: MovieDetailsModalProps) => {
-  console.log('hi2');
-
-  console.log(movie);
   const navigate = useNavigate();
 
   const imageUrl = movie.poster_path
