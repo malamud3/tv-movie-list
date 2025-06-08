@@ -7,26 +7,33 @@ const ImgCell = lazy(() => import('../ImgCell/ImgCell'));
 
 type CellListProps = {
   movies: Show[];
-  col?: number; // Optional prop with default value
+  col?: number; // Number of columns or rows
   setLastItemRef?: (node: HTMLLIElement | null) => void;
+  axis?: 'X' | 'Y'; // Determines scrolling direction
 };
 
 export const CellList = ({
   movies,
-  col = 1,
   setLastItemRef,
+  axis = 'X',
+  col = 8, // Default to 3 columns/rows
 }: CellListProps) => {
-  const itemWidth = `calc(100% / ${col})`;
-
   return (
-    <ul className={styles.list}>
+    <ul
+      className={`${styles.list} ${
+        axis === 'X' ? styles.horizontal : styles.vertical
+      }`}
+      style={{
+        gridTemplateColumns: axis === 'X' ? `repeat(${col}, 1fr)` : undefined,
+        gridTemplateRows: axis === 'Y' ? `repeat(${col}, auto)` : undefined,
+      }}
+    >
       {movies.map((movie, index) => {
         const isLastItem = index === movies.length - 1;
         return (
           <li
             key={`${movie.id}-${index}`}
             className={styles.item}
-            style={{ width: itemWidth }}
             ref={isLastItem ? setLastItemRef : undefined}
           >
             <Link to={`/${movie.id}`} state={{ item: movie }}>

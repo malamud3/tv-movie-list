@@ -4,10 +4,12 @@ export function useInfiniteScroll({
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
+    axis = 'Y', // Default to vertical scrolling
 }: {
     hasNextPage: boolean | undefined;
     isFetchingNextPage: boolean;
     fetchNextPage: () => void;
+    axis?: 'X' | 'Y'; // Allow 'X' or 'Y' as valid values
 }) {
     const observerRef = useRef<IntersectionObserver | null>(null);
 
@@ -22,11 +24,13 @@ export function useInfiniteScroll({
             if (node) {
                 observerRef.current = new IntersectionObserver(
                     (entries) => {
-                        if (
-                            entries[0].isIntersecting &&
-                            hasNextPage &&
-                            !isFetchingNextPage
-                        ) {
+                        const entry = entries[0];
+                        const isIntersecting =
+                            axis === 'X'
+                                ? entry.intersectionRatio > 0 && entry.boundingClientRect.left < window.innerWidth
+                                : entry.isIntersecting;
+
+                        if (isIntersecting && hasNextPage && !isFetchingNextPage) {
                             fetchNextPage();
                         }
                     },
@@ -36,7 +40,7 @@ export function useInfiniteScroll({
                 observerRef.current.observe(node);
             }
         },
-        [fetchNextPage, hasNextPage, isFetchingNextPage]
+        [fetchNextPage, hasNextPage, isFetchingNextPage, axis]
     );
 
     useEffect(() => {

@@ -1,15 +1,22 @@
 .list {
-  display: flex;
-  overflow-x: auto;
+  display: grid; /* Use grid layout for matrix-like structure */
   gap: clamp(0.5rem, 2vw, 1rem); /* Responsive spacing */
   padding: clamp(0.5rem, 2vw, 1rem) 0;
   list-style: none;
   margin: 0;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
 
   scrollbar-width: thin;
   scrollbar-color: #888 transparent;
+}
+
+.horizontal {
+  overflow-x: auto; /* Enable horizontal scrolling */
+  overflow-y: hidden; /* Disable vertical scrolling */
+}
+
+.vertical {
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Disable horizontal scrolling */
 }
 
 .list::-webkit-scrollbar {
@@ -23,6 +30,10 @@
 
 .list::-webkit-scrollbar-track {
   background: transparent;
+}
+
+.item {
+  scroll-snap-align: start;
 }
 
 .item:hover {
