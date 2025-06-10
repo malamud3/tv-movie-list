@@ -1,34 +1,26 @@
-.list {
-  display: grid; /* Use grid layout for matrix-like structure */
-  gap: clamp(0.5rem, 2vw, 1rem); /* Responsive spacing */
+.horizontal {
+  display: flex;
+  flex-direction: row;
+  gap: clamp(0.5rem, 2vw, 1rem);
   padding: clamp(0.5rem, 2vw, 1rem) 0;
   list-style: none;
   margin: 0;
-
+  overflow-x: auto;
+  overflow-y: hidden;
   scrollbar-width: thin;
   scrollbar-color: #888 transparent;
 }
 
-.horizontal {
-  overflow-x: auto; /* Enable horizontal scrolling */
-  overflow-y: hidden; /* Disable vertical scrolling */
-}
-
-.vertical {
-  overflow-y: auto; /* Enable vertical scrolling */
-  overflow-x: hidden; /* Disable horizontal scrolling */
-}
-
-.list::-webkit-scrollbar {
+.horizontal::-webkit-scrollbar {
   height: 8px;
 }
 
-.list::-webkit-scrollbar-thumb {
+.horizontal::-webkit-scrollbar-thumb {
   background-color: #888;
   border-radius: 4px;
 }
 
-.list::-webkit-scrollbar-track {
+.horizontal::-webkit-scrollbar-track {
   background: transparent;
 }
 
