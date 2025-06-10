@@ -10,7 +10,7 @@ export default function MoviePage() {
     : undefined;
 
   return (
-    <main style={{ padding: 7 }}>
+    <main>
       <ListController
         key="recently-added-movies"
         type="MOVIES"

@@ -20,7 +20,7 @@ function chunkArray<T>(array: T[], size: number): T[][] {
 export const CellListVertical = ({
   movies,
   setLastItemRef,
-  columns = 4, // Default to 4 columns per row
+  columns = 8,
 }: CellListVerticalProps) => {
   const rows = chunkArray(movies, columns);
 

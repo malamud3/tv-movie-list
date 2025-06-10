@@ -48,7 +48,7 @@ export default function ListController({
   );
 
   return (
-    <section>
+    <section style={{ marginInline: 20 }}>
       <h2>{title}</h2>
       {isLoading ? (
         <p>Loading...</p>
