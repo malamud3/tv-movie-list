@@ -2,7 +2,8 @@ import { Show } from '../../interface/TmdbTypes';
 import { usePaginatedContent } from '../../util/hooks/usePaginatedContent';
 import { useInfiniteScroll } from '../../util/hooks/useInfiniteScroll';
 import ErrorBlock from '../UI/ErrorBlock/ErrorBlock';
-import { CellList } from '../UI/CellList';
+import { CellListHorizontal } from '../UI/CellListHorizontal';
+import { CellListVertical } from '../UI/CellListVertical';
 import MovieDetailsModal from '../UI/Model/MovieDetailsModal';
 import { tmdbActions } from '../../interface/Consts';
 import { useMemo } from 'react';
@@ -12,6 +13,7 @@ interface ListControllerProps {
   title: string;
   fetchFunction: tmdbActions;
   selectedId?: number;
+  listType?: 'vertical' | 'horizontal';
 }
 
 export default function ListController({
@@ -19,6 +21,7 @@ export default function ListController({
   title,
   fetchFunction,
   selectedId,
+  listType = 'vertical',
 }: ListControllerProps) {
   const {
     data: pages,
@@ -57,7 +60,11 @@ export default function ListController({
       ) : (
         <>
           {items.length > 0 ? (
-            <CellList movies={items} setLastItemRef={lastItemRef} />
+            listType === 'horizontal' ? (
+              <CellListHorizontal movies={items} setLastItemRef={lastItemRef} />
+            ) : (
+              <CellListVertical movies={items} setLastItemRef={lastItemRef} />
+            )
           ) : (
             <p>No items available</p>
           )}

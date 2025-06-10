@@ -26,6 +26,7 @@ export default function HomePage() {
           title={section.title}
           fetchFunction={section.fetchFunction}
           selectedId={selectedId}
+          listType="horizontal"
         />
       ))}
     </main>

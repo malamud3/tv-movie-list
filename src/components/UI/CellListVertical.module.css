@@ -1,0 +1,35 @@
+.matrix {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.5rem, 2vw, 1rem);
+  max-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+}
+
+.matrix::-webkit-scrollbar {
+  width: 8px;
+}
+
+.matrix::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.matrix::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.matrix > * {
+  display: flex;
+  flex-direction: row;
+  gap: clamp(0.5rem, 2vw, 1rem);
+  list-style: none;
+  padding: clamp(0.5rem, 2vw, 1rem) 0;
+  list-style: none;
+  margin: 0;
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+}
