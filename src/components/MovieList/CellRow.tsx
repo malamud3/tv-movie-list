@@ -2,7 +2,7 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Show } from '../../interface/TmdbTypes';
-import { ImgCell } from '../ImgCell/ImgCell';
+import { ImgCell } from '../UI/ImgCell/ImgCell';
 
 interface CellRowProps {
   movies: Show[];

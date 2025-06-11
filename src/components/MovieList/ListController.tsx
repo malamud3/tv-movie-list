@@ -2,12 +2,12 @@ import { Show } from '../../interface/TmdbTypes';
 import { usePaginatedContent } from '../../util/hooks/usePaginatedContent';
 import { useInfiniteScroll } from '../../util/hooks/useInfiniteScroll';
 import ErrorBlock from '../UI/ErrorBlock/ErrorBlock';
-import { CellListHorizontal } from '../UI/CellListHorizontal';
-import { CellListVertical } from '../UI/CellListVertical';
+import { CellListHorizontal } from './CellListHorizontal';
+import { CellListVertical } from './CellListVertical';
 import MovieDetailsModal from '../UI/Model/MovieDetailsModal';
 import { tmdbActions } from '../../interface/Consts';
 import { useMemo } from 'react';
-
+import { flattenAndFilterShows } from '../../util/array';
 interface ListControllerProps {
   type: string;
   title: string;
@@ -32,10 +32,8 @@ export default function ListController({
     error,
   } = usePaginatedContent([type, fetchFunction]);
 
-  const items: Show[] = useMemo(
-    () => pages?.pages.flat().filter((item) => item.poster_path) || [],
-    [pages]
-  );
+  const items: Show[] = useMemo(() => flattenAndFilterShows(pages), [pages]);
+
   const { lastItemRef } = useInfiniteScroll({
     hasNextPage,
     isFetchingNextPage,
@@ -48,7 +46,7 @@ export default function ListController({
   );
 
   return (
-    <section style={{ marginInline: 20 }}>
+    <section>
       <h2>{title}</h2>
       {isLoading ? (
         <p>Loading...</p>
@@ -61,9 +59,27 @@ export default function ListController({
         <>
           {items.length > 0 ? (
             listType === 'horizontal' ? (
-              <CellListHorizontal movies={items} setLastItemRef={lastItemRef} />
+              <div
+                style={{
+                  padding: 10,
+                }}
+              >
+                <CellListHorizontal
+                  movies={items}
+                  setLastItemRef={lastItemRef}
+                />
+              </div>
             ) : (
-              <CellListVertical movies={items} setLastItemRef={lastItemRef} />
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  marginInline: 20,
+                }}
+              >
+                <CellListVertical movies={items} setLastItemRef={lastItemRef} />
+              </div>
             )
           ) : (
             <p>No items available</p>
@@ -71,7 +87,6 @@ export default function ListController({
           {isFetchingNextPage && <p>Loading more...</p>}
         </>
       )}
-
       {selectedItem && <MovieDetailsModal movie={selectedItem} />}
     </section>
   );

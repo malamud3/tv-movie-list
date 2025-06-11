@@ -1,3 +1,6 @@
+import { Show } from "../interface/TmdbTypes";
+
+
 export const chunkArray = <T>(array: T[], size: number): T[][] => {
     const result: T[][] = [];
     for (let i = 0; i < array.length; i += size) {
@@ -5,3 +8,6 @@ export const chunkArray = <T>(array: T[], size: number): T[][] => {
     }
     return result;
 };
+export function flattenAndFilterShows(pages: { pages: Show[][] } | undefined): Show[] {
+    return pages?.pages.flat().filter((item) => item.poster_path) || [];
+}
