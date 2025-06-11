@@ -1,5 +1,5 @@
-import { Show } from '../../interface/TmdbTypes';
-import { CellRow } from './CellRow';
+import { Show } from '../../../interface/TmdbTypes';
+import { CellRow } from '../CellRow';
 import styles from './CellListHorizontal.module.css';
 
 type CellListHorizontalProps = {
