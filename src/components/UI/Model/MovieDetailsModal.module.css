@@ -44,19 +44,36 @@
 }
 
 .trailerSection {
-  margin-top: 1.5rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .trailerTitle {
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
   color: #1c1c1e;
+  text-align: center;
+  position: relative;
+}
+
+.trailerTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 2px;
 }
 
 .trailerContainer {
-  max-width: 500px;
-  margin-bottom: 1rem;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 2rem auto;
 }
 
 .trailerPlaceholder {
@@ -64,21 +81,24 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 200px;
-  background-color: #f5f5f7;
-  border-radius: 12px;
-  border: 1px dashed #d1d1d6;
-  gap: 1rem;
+  height: 250px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 16px;
+  border: 2px dashed rgba(102, 126, 234, 0.3);
+  gap: 1.5rem;
+  transition: all 0.3s ease;
 }
 
 .trailerPlaceholder p {
   margin: 0;
-  font-size: 1rem;
-  color: #8e8e93;
+  font-size: 1.1rem;
+  color: #667eea;
+  font-weight: 500;
 }
 
 .trailerError {
-  color: #ff3b30 !important;
+  color: #ff6b6b !important;
+  font-weight: 600;
 }
 
 .spinner {

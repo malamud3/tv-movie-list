@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Show } from '../../../interface/TmdbTypes.ts';
 import Modal from './Modal.tsx';
 import { useNavigate } from 'react-router-dom';
@@ -11,18 +12,32 @@ type MovieDetailsModalProps = {
 
 const MovieDetailsModal = ({ movie }: MovieDetailsModalProps) => {
   const navigate = useNavigate();
+  const [shouldLoadTrailer, setShouldLoadTrailer] = useState(false);
 
   const imageUrl = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
     : '/fallback-poster.png';
 
-  // TanStack Query for trailer fetching
+  // TanStack Query for trailer fetching - only enabled when shouldLoadTrailer is true
   const {
     data: trailerUrl,
     isLoading: trailerLoading,
     error: trailerError,
     isError,
-  } = useTrailer(movie.id, movie.title || '');
+  } = useTrailer(movie.id, movie.title || '', {
+    enabled: shouldLoadTrailer,
+  });
+
+  const handleLoadTrailer = () => {
+    setShouldLoadTrailer(true);
+  };
+
+  const getErrorMessage = () => {
+    if (trailerError instanceof Error) {
+      return trailerError.message;
+    }
+    return 'Trailer not available';
+  };
 
   return (
     <Modal onClose={() => navigate(-1)}>
@@ -53,27 +68,12 @@ const MovieDetailsModal = ({ movie }: MovieDetailsModalProps) => {
 
           {/* Trailer Section */}
           <div className={styles.trailerSection}>
-            <h3 className={styles.trailerTitle}>Trailer</h3>
-            {trailerLoading && (
-              <div className={styles.trailerPlaceholder}>
-                <div className={styles.spinner}></div>
-                <p>Loading trailer...</p>
-              </div>
-            )}
-            {isError && (
-              <div className={styles.trailerPlaceholder}>
-                <p className={styles.trailerError}>
-                  {trailerError instanceof Error
-                    ? trailerError.message
-                    : 'Trailer not available'}
-                </p>
-              </div>
-            )}
-            {trailerUrl && !trailerLoading && !isError && (
-              <div className={styles.trailerContainer}>
-                <YouTubePlayer url={trailerUrl} />
-              </div>
-            )}
+            <YouTubePlayer
+              url={trailerUrl}
+              isLoading={trailerLoading}
+              error={isError ? getErrorMessage() : null}
+              onLoadTrailer={handleLoadTrailer}
+            />
           </div>
         </div>
       </div>

@@ -1,38 +1,122 @@
 // components/YouTubePlayer.tsx
+import { useState } from 'react';
+import styles from './YouTubePlayer.module.css';
+
 type YouTubePlayerProps = {
-  url: string;
+  url?: string;
+  autoplay?: boolean;
+  showControls?: boolean;
+  isLoading?: boolean;
+  error?: string | null;
+  onLoadTrailer?: () => void;
 };
 
-const YouTubePlayer = ({ url }: YouTubePlayerProps) => {
-  const videoId = new URL(url).searchParams.get('v');
+const YouTubePlayer = ({
+  url,
+  autoplay = false,
+  showControls = true,
+  isLoading = false,
+  error = null,
+  onLoadTrailer,
+}: YouTubePlayerProps) => {
+  const [showVideo, setShowVideo] = useState(false);
 
-  if (!videoId) return null;
+  // If no URL and not loading, show the button
+  if (!url && !isLoading && !error) {
+    return (
+      <div className={styles.playerWrapper}>
+        <button
+          className={styles.trailerButton}
+          onClick={() => {
+            setShowVideo(true);
+            onLoadTrailer?.();
+          }}
+        >
+          <span className={styles.playIcon}>▶</span>
+          <span>Official Trailer</span>
+        </button>
+      </div>
+    );
+  }
 
-  return (
-    <div
-      style={{
-        position: 'relative',
-        paddingBottom: '56.25%',
-        height: 0,
-        overflow: 'hidden',
-      }}
-    >
-      <iframe
-        src={`https://www.youtube.com/embed/${videoId}`}
-        title="YouTube Trailer"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-        }}
-      />
-    </div>
-  );
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className={styles.playerWrapper}>
+        <div className={styles.playerContainer}>
+          <div className={styles.loadingOverlay}>
+            <div className={styles.spinner}></div>
+            <p className={styles.loadingText}>Loading trailer...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <div className={styles.playerWrapper}>
+        <div className={styles.playerContainer}>
+          <div className={styles.errorOverlay}>
+            <div className={styles.errorIcon}>⚠</div>
+            <p className={styles.errorText}>{error}</p>
+            <button
+              className={styles.retryButton}
+              onClick={() => {
+                setShowVideo(false);
+                onLoadTrailer?.();
+              }}
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show video player if URL is available and showVideo is true
+  if (url && showVideo) {
+    const videoId = new URL(url).searchParams.get('v');
+    if (!videoId) return null;
+
+    // Enhanced embed URL with better parameters
+    const embedUrl = new URL(`https://www.youtube.com/embed/${videoId}`);
+    embedUrl.searchParams.set('rel', '0'); // Don't show related videos
+    embedUrl.searchParams.set('modestbranding', '1'); // Minimal YouTube branding
+    embedUrl.searchParams.set('fs', '1'); // Allow fullscreen
+    embedUrl.searchParams.set('cc_load_policy', '0'); // Don't show captions by default
+    embedUrl.searchParams.set('iv_load_policy', '3'); // Hide annotations
+    embedUrl.searchParams.set('controls', showControls ? '1' : '0');
+    if (autoplay) {
+      embedUrl.searchParams.set('autoplay', '1');
+      embedUrl.searchParams.set('mute', '1'); // Required for autoplay
+    }
+
+    return (
+      <div className={styles.playerWrapper}>
+        {/* Trailer label */}
+        <div className={styles.trailerLabel}>
+          <span className={styles.playIcon}>▶</span>
+          <span>Official Trailer</span>
+        </div>
+        <div className={styles.playerContainer}>
+          <iframe
+            src={embedUrl.toString()}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            className={styles.iframe}
+            loading="lazy"
+          />
+          {/* Gradient overlay for better visual integration */}
+          <div className={styles.gradientOverlay} />
+        </div>
+      </div>
+    );
+  }
+
+  return null;
 };
 
 export default YouTubePlayer;
