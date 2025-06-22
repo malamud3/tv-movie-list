@@ -19,16 +19,16 @@ const YouTubePlayer = ({
   error = null,
   onLoadTrailer,
 }: YouTubePlayerProps) => {
-  const [showVideo, setShowVideo] = useState(false);
+  const [buttonClicked, setButtonClicked] = useState(false);
 
-  // If no URL and not loading, show the button
-  if (!url && !isLoading && !error) {
+  // If no URL and not loading and button hasn't been clicked, show the button
+  if (!url && !isLoading && !error && !buttonClicked) {
     return (
       <div className={styles.playerWrapper}>
         <button
           className={styles.trailerButton}
           onClick={() => {
-            setShowVideo(true);
+            setButtonClicked(true);
             onLoadTrailer?.();
           }}
         >
@@ -64,7 +64,6 @@ const YouTubePlayer = ({
             <button
               className={styles.retryButton}
               onClick={() => {
-                setShowVideo(false);
                 onLoadTrailer?.();
               }}
             >
@@ -76,8 +75,8 @@ const YouTubePlayer = ({
     );
   }
 
-  // Show video player if URL is available and showVideo is true
-  if (url && showVideo) {
+  // Show video player if URL is available
+  if (url) {
     const videoId = new URL(url).searchParams.get('v');
     if (!videoId) return null;
 
@@ -96,11 +95,6 @@ const YouTubePlayer = ({
 
     return (
       <div className={styles.playerWrapper}>
-        {/* Trailer label */}
-        <div className={styles.trailerLabel}>
-          <span className={styles.playIcon}>▶</span>
-          <span>Official Trailer</span>
-        </div>
         <div className={styles.playerContainer}>
           <iframe
             src={embedUrl.toString()}
