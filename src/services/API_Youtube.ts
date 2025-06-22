@@ -1,4 +1,3 @@
-// api/youtube.ts
 const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 const YOUTUBE_SEARCH_URL = "https://www.googleapis.com/youtube/v3/search";
 const YOUTUBE_WATCH_URL = "https://www.youtube.com/watch?v=";
