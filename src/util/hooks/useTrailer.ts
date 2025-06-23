@@ -1,4 +1,3 @@
-// hooks/useTrailer.ts
 import { useQuery } from '@tanstack/react-query';
 import { getYoutubeTrailer } from '../../services/API_Youtube';
 

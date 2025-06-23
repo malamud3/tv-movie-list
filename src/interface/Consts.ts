@@ -4,6 +4,7 @@ export const SearchStrings: { searchPlaceHolder: string } = {
 
 
 const API_KEY: string = import.meta.env.VITE_API_KEY || '';
+
 if (!API_KEY) {
         throw new Error('API_KEY is not defined in the environment variables');
 }
