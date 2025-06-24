@@ -25,9 +25,9 @@ export const CellListVertical = ({
   const rows = chunkArray(movies, columns);
 
   return (
-    <div className={styles.matrix}>
+    <div className={styles.matrix} role="grid">
       {rows.map((rowMovies, rowIdx) => (
-        <ul key={rowIdx} className={styles.row}>
+        <ul key={rowIdx} className={styles.row} role="row">
           <CellRow
             movies={rowMovies}
             rowIndex={rowIdx}
