@@ -12,26 +12,30 @@ interface CellRowProps {
 }
 
 export const CellRow = memo<CellRowProps>(
-  ({ movies, setLastItemRef, rowIndex = 0, isLastRow = false }) => (
-    <>
-      {movies.map((movie, colIndex) => {
-        const isLastItem = isLastRow && colIndex === movies.length - 1;
+  ({ movies, setLastItemRef, rowIndex = 0, isLastRow = false }) => {
+    if (!movies?.length) return null;
 
-        return (
-          <li
-            key={`${movie.id}-${rowIndex}-${colIndex}`}
-            ref={isLastItem ? setLastItemRef : undefined}
-          >
-            <Link
-              to={`/${movie.id}`}
-              state={{ item: movie }}
-              aria-label={`View details for ${movie.title}`}
-            >
-              <ImgCell posterPath={movie.poster_path} title={movie.title} />
-            </Link>
-          </li>
-        );
-      })}
-    </>
-  )
+    return (
+      <>
+        {movies.map((movie, colIndex) => {
+          const isLastItem = isLastRow && colIndex === movies.length - 1;
+          const itemKey = `${movie.id}-${rowIndex}-${colIndex}`;
+
+          return (
+            <li key={itemKey} ref={isLastItem ? setLastItemRef : undefined}>
+              <Link
+                to={`/${movie.id}`}
+                state={{ item: movie }}
+                aria-label={`View details for ${movie.title}`}
+              >
+                <ImgCell posterPath={movie.poster_path} title={movie.title} />
+              </Link>
+            </li>
+          );
+        })}
+      </>
+    );
+  }
 );
+
+CellRow.displayName = 'CellRow';

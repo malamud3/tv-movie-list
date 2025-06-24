@@ -1,20 +1,42 @@
+import { useMemo } from 'react';
 import { Show } from '../../interface/TmdbTypes';
 import { usePaginatedContent } from '../../util/hooks/usePaginatedContent';
 import { useInfiniteScroll } from '../../util/hooks/useInfiniteScroll';
+import { flattenAndFilterShows } from '../../util/array';
+import { tmdbActions } from '../../interface/Consts';
 import ErrorBlock from '../UI/ErrorBlock/ErrorBlock';
 import { CellListHorizontal } from './Horizontal/CellListHorizontal';
 import { CellListVertical } from './Vertical/CellListVertical';
 import MovieDetailsModal from '../UI/Model/MovieDetailsModal';
-import { tmdbActions } from '../../interface/Consts';
-import { useMemo } from 'react';
-import { flattenAndFilterShows } from '../../util/array';
+
+type ListType = 'vertical' | 'horizontal';
+
 interface ListControllerProps {
   type: string;
   title: string;
   fetchFunction: tmdbActions;
   selectedId?: number;
-  listType?: 'vertical' | 'horizontal';
+  listType?: ListType;
+  columns?: number;
 }
+
+const LoadingSpinner = () => (
+  <div className="loading-container" role="status" aria-label="Loading">
+    <p>Loading...</p>
+  </div>
+);
+
+const LoadingMore = () => (
+  <div className="loading-more" role="status" aria-label="Loading more items">
+    <p>Loading more...</p>
+  </div>
+);
+
+const EmptyState = ({ message }: { message: string }) => (
+  <div className="empty-state">
+    <p>{message}</p>
+  </div>
+);
 
 export default function ListController({
   type,
@@ -22,6 +44,7 @@ export default function ListController({
   fetchFunction,
   selectedId,
   listType = 'vertical',
+  columns,
 }: ListControllerProps) {
   const {
     data: pages,
@@ -32,7 +55,10 @@ export default function ListController({
     error,
   } = usePaginatedContent([type, fetchFunction]);
 
-  const items: Show[] = useMemo(() => flattenAndFilterShows(pages), [pages]);
+  const items: Show[] = useMemo(
+    () => flattenAndFilterShows(pages) ?? [],
+    [pages]
+  );
 
   const { lastItemRef } = useInfiniteScroll({
     hasNextPage,
@@ -41,52 +67,77 @@ export default function ListController({
   });
 
   const selectedItem = useMemo(
-    () => items.find((item) => item.id === selectedId),
+    () => (selectedId ? items.find((item) => item.id === selectedId) : null),
     [items, selectedId]
   );
 
-  return (
-    <section>
-      <h2>{title}</h2>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : error ? (
+  // Error state
+  if (error) {
+    return (
+      <section>
+        <h2>{title}</h2>
         <ErrorBlock
           title={`Failed to load ${title.toLowerCase()}`}
           message={error instanceof Error ? error.message : 'Unknown error'}
         />
-      ) : (
-        <>
-          {items.length > 0 ? (
-            listType === 'horizontal' ? (
-              <div
-                style={{
-                  padding: 10,
-                }}
-              >
-                <CellListHorizontal
-                  movies={items}
-                  setLastItemRef={lastItemRef}
-                />
-              </div>
-            ) : (
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  marginInline: 20,
-                }}
-              >
-                <CellListVertical movies={items} setLastItemRef={lastItemRef} />
-              </div>
-            )
-          ) : (
-            <p>No items available</p>
-          )}
-          {isFetchingNextPage && <p>Loading more...</p>}
-        </>
-      )}
+      </section>
+    );
+  }
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <section>
+        <h2>{title}</h2>
+        <LoadingSpinner />
+      </section>
+    );
+  }
+
+  // Empty state
+  if (!items.length) {
+    return (
+      <section>
+        <h2>{title}</h2>
+        <EmptyState message="No items available" />
+      </section>
+    );
+  }
+
+  // Content rendering
+  const renderList = () => {
+    const commonProps = {
+      movies: items,
+      setLastItemRef: lastItemRef,
+    };
+
+    if (listType === 'horizontal') {
+      return (
+        <div style={{ padding: 10 }}>
+          <CellListHorizontal {...commonProps} />
+        </div>
+      );
+    }
+
+    return (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          marginInline: 20,
+        }}
+      >
+        <CellListVertical {...commonProps} columns={columns} />
+      </div>
+    );
+  };
+
+  return (
+    <section>
+      <h2>{title}</h2>
+      {renderList()}
+      {isFetchingNextPage && <LoadingMore />}
       {selectedItem && <MovieDetailsModal movie={selectedItem} />}
     </section>
   );

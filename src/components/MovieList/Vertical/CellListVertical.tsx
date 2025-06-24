@@ -1,20 +1,13 @@
 import { Show } from '../../../interface/TmdbTypes';
 import { CellRow } from '../CellRow';
 import styles from './CellListVertical.module.css';
+import { chunkArray } from '../../../util/array';
+import { useMemo } from 'react';
 
-type CellListVerticalProps = {
+interface CellListVerticalProps {
   movies: Show[];
   setLastItemRef?: (node: HTMLLIElement | null) => void;
-  columns?: number; // Optional: allow custom column count
-};
-
-// Helper to chunk array into rows
-function chunkArray<T>(array: T[], size: number): T[][] {
-  const result: T[][] = [];
-  for (let i = 0; i < array.length; i += size) {
-    result.push(array.slice(i, i + size));
-  }
-  return result;
+  columns?: number;
 }
 
 export const CellListVertical = ({
@@ -22,22 +15,31 @@ export const CellListVertical = ({
   setLastItemRef,
   columns = 8,
 }: CellListVerticalProps) => {
-  const rows = chunkArray(movies, columns);
+  const rows = useMemo(
+    () => chunkArray(movies, Math.max(1, columns)),
+    [movies, columns]
+  );
+
+  if (!rows.length) {
+    return <div className={styles.empty}>No items to display</div>;
+  }
 
   return (
-    <div className={styles.matrix} role="grid">
-      {rows.map((rowMovies, rowIdx) => (
-        <ul key={rowIdx} className={styles.row} role="row">
-          <CellRow
-            movies={rowMovies}
-            rowIndex={rowIdx}
-            isLastRow={rowIdx === rows.length - 1}
-            setLastItemRef={
-              rowIdx === rows.length - 1 ? setLastItemRef : undefined
-            }
-          />
-        </ul>
-      ))}
+    <div className={styles.matrix} role="grid" aria-label="Movies grid">
+      {rows.map((rowMovies, rowIndex) => {
+        const isLastRow = rowIndex === rows.length - 1;
+
+        return (
+          <ul key={rowIndex} className={styles.row} role="row">
+            <CellRow
+              movies={rowMovies}
+              rowIndex={rowIndex}
+              isLastRow={isLastRow}
+              setLastItemRef={isLastRow ? setLastItemRef : undefined}
+            />
+          </ul>
+        );
+      })}
     </div>
   );
 };

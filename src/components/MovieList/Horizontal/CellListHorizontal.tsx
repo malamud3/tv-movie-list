@@ -11,7 +11,7 @@ export const CellListHorizontal = ({
   movies,
   setLastItemRef,
 }: CellListHorizontalProps) => (
-  <ul className={styles.horizontal}>
+  <ul className={styles.horizontal} role="list">
     <CellRow movies={movies} setLastItemRef={setLastItemRef} isLastRow />
   </ul>
 );
