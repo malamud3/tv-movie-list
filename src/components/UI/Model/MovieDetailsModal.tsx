@@ -1,18 +1,23 @@
 import { useState } from 'react';
-import { Show } from '../../../interface/TmdbTypes.ts';
+import { UnifiedMediaItem } from '../../../interface/TmdbTypes.ts';
 import Modal from './Modal.tsx';
 import { useNavigate } from 'react-router-dom';
 import { useTrailer } from '../../../util/hooks/useTrailer.ts';
 import YouTubePlayer from '../../Youtube/YouTubePlayer.tsx';
 import styles from './MovieDetailsModal.module.css';
+import { getMediaTitle, getMediaReleaseDate, formatReleaseDate } from '../../../util/dateHelpers.ts';
 
 type MovieDetailsModalProps = {
-  movie: Show;
+  movie: UnifiedMediaItem;
 };
 
 const MovieDetailsModal = ({ movie }: MovieDetailsModalProps) => {
   const navigate = useNavigate();
   const [shouldLoadTrailer, setShouldLoadTrailer] = useState(false);
+  
+  const title = getMediaTitle(movie);
+  const releaseDate = getMediaReleaseDate(movie);
+  const formattedReleaseDate = formatReleaseDate(releaseDate);
 
   const imageUrl = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
@@ -24,7 +29,7 @@ const MovieDetailsModal = ({ movie }: MovieDetailsModalProps) => {
     isLoading: trailerLoading,
     error: trailerError,
     isError,
-  } = useTrailer(movie.id, movie.title || '', {
+  } = useTrailer(movie.id, title, {
     enabled: shouldLoadTrailer,
   });
 
@@ -44,13 +49,13 @@ const MovieDetailsModal = ({ movie }: MovieDetailsModalProps) => {
       <div className={styles.container}>
         <img
           src={imageUrl}
-          alt={movie.title ? `${movie.title} Poster` : 'Movie Poster'}
+          alt={`${title} Poster`}
           className={styles.poster}
           loading="lazy"
           draggable={false}
         />
         <div className={styles.details}>
-          <h2 className={styles.title}>{movie.title ?? 'Untitled Movie'}</h2>
+          <h2 className={styles.title}>{title}</h2>
           <p>
             <strong>Rating:</strong>{' '}
             {movie.vote_average !== undefined
@@ -59,7 +64,7 @@ const MovieDetailsModal = ({ movie }: MovieDetailsModalProps) => {
             ({movie.vote_count ?? 0} votes)
           </p>
           <p>
-            <strong>Release Date:</strong> {movie.release_date ?? 'Unknown'}
+            <strong>Release Date:</strong> {formattedReleaseDate}
           </p>
           <p>
             <strong>Overview:</strong>{' '}

@@ -18,7 +18,22 @@ export type upComingShow = BaseShow & {
     name: string;
 };
 
-export type recentlyAddedMovie = BaseShow & {
-    original_title: string;
-    release_date: string;
+export type recentlyAddedShow = BaseShow & {
+    name: string;
+    original_name: string;
+    first_air_date: string;
+};
+
+export type MediaItem = Show | upComingShow | recentlyAddedShow;
+
+export type UnifiedMediaItem = BaseShow & {
+    title?: string;
+    name?: string;
+    original_title?: string;
+    original_name?: string;
+    release_date?: string;
+    first_air_date?: string;
+    vote_count?: number;
+    vote_average?: number;
+    media_type?: 'movie' | 'tv';
 };

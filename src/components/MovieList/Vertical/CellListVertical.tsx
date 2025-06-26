@@ -1,11 +1,11 @@
-import { Show } from '../../../interface/TmdbTypes';
+import { UnifiedMediaItem } from '../../../interface/TmdbTypes';
 import { CellRow } from '../CellRow';
 import styles from './CellListVertical.module.css';
 import { chunkArray } from '../../../util/array';
 import { useMemo } from 'react';
 
 interface CellListVerticalProps {
-  movies: Show[];
+  movies: UnifiedMediaItem[];
   setLastItemRef?: (node: HTMLLIElement | null) => void;
   columns?: number;
 }

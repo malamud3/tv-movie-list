@@ -80,5 +80,6 @@ export enum tmdbActions {
         getTrending = 'getTrending',
         getUpcoming = 'getUpcoming',
         getTopRated = 'getTopRated',
-        getRecentlyAdded = 'getRecentlyAdded'
+        getRecentlyAdded = 'getRecentlyAdded',
+        search = 'search'
 }

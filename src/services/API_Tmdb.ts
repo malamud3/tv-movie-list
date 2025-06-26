@@ -86,12 +86,18 @@ const getRecentlyAdded = async (type: 'MOVIES' | 'TV_SHOWS', options: TmdbAPIPro
 };
 
 
-const doSearch = async (type: 'MOVIES' | 'TV_SHOWS', query: string, dataPage: number, signal?: AbortSignal) => {
+const doSearch = async (type: 'MOVIES' | 'TV_SHOWS', options: TmdbAPIProps) => {
+    if (!options.query) {
+        throw new Error('Query string is required for search');
+    }
     const url = type === 'MOVIES'
-        ? `${API_TV.doSearchMovie}${encodeURIComponent(query)}&page=${dataPage}`
-        : `${API_TV.doSearchTv}${encodeURIComponent(query)}&page=${dataPage}`;
+        ? `${API_TV.doSearchMovie}${encodeURIComponent(options.query)}&page=${options.dataPage}`
+        : `${API_TV.doSearchTv}${encodeURIComponent(options.query)}&page=${options.dataPage}`;
 
-    return fetchFromTmdb(url, signal);
+
+    const formattedUrl = formatUrlPageGenre({ url, page: options.dataPage, genre: options.genreFilter ?? -1 });
+
+    return fetchFromTmdb(formattedUrl, options.signal);
 };
 
 
@@ -119,10 +125,9 @@ export const API_tmdb = async (props: TmdbAPIProps) => {
             throw new Error('getUpcoming is not implemented');
         case tmdbActions.getRecentlyAdded:
             return getRecentlyAdded(type, options);
+        case tmdbActions.search:
+            return doSearch(type, options);
         default:
-            if (action === 'search' && query) {
-                return doSearch(type, query, dataPage, signal);
-            }
             throw new Error(`Invalid action: ${action}`);
     }
 };

@@ -1,4 +1,4 @@
-import { Show } from "../interface/TmdbTypes";
+import { UnifiedMediaItem } from "../interface/TmdbTypes";
 
 
 export const chunkArray = <T>(array: T[], size: number): T[][] => {
@@ -8,6 +8,7 @@ export const chunkArray = <T>(array: T[], size: number): T[][] => {
     }
     return result;
 };
-export function flattenAndFilterShows(pages: { pages: Show[][] } | undefined): Show[] {
+
+export function flattenAndFilterShows(pages: { pages: UnifiedMediaItem[][] } | undefined): UnifiedMediaItem[] {
     return pages?.pages.flat().filter((item) => item.poster_path) || [];
 }
