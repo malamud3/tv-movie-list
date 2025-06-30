@@ -34,6 +34,7 @@ export const CellRow = memo<CellRowProps>(
                   posterPath={movie.poster_path} 
                   title={title}
                   overview={movie.overview}
+                  rating={movie.vote_average}
                 />
               </Link>
             </li>

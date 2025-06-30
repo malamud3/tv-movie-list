@@ -4,6 +4,7 @@ import Modal from './Modal.tsx';
 import { useNavigate } from 'react-router-dom';
 import { useTrailer } from '../../../util/hooks/useTrailer.ts';
 import YouTubePlayer from '../../Youtube/YouTubePlayer.tsx';
+import { ImgCell } from '../ImgCell/ImgCell.tsx';
 import styles from './MovieDetailsModal.module.css';
 import { getMediaTitle, getMediaReleaseDate, formatReleaseDate } from '../../../util/dateHelpers.ts';
 
@@ -18,10 +19,6 @@ const MovieDetailsModal = ({ movie }: MovieDetailsModalProps) => {
   const title = getMediaTitle(movie);
   const releaseDate = getMediaReleaseDate(movie);
   const formattedReleaseDate = formatReleaseDate(releaseDate);
-
-  const imageUrl = movie.poster_path
-    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    : '/fallback-poster.png';
 
   // TanStack Query for trailer fetching - only enabled when shouldLoadTrailer is true
   const {
@@ -47,13 +44,14 @@ const MovieDetailsModal = ({ movie }: MovieDetailsModalProps) => {
   return (
     <Modal onClose={() => navigate(-1)}>
       <div className={styles.container}>
-        <img
-          src={imageUrl}
-          alt={`${title} Poster`}
-          className={styles.poster}
-          loading="lazy"
-          draggable={false}
-        />
+        <div className={styles.posterContainer}>
+          <ImgCell
+            posterPath={movie.poster_path}
+            title={title}
+            overview={movie.overview}
+            rating={movie.vote_average}
+          />
+        </div>
         <div className={styles.details}>
           <h2 className={styles.title}>{title}</h2>
           <p>

@@ -7,6 +7,20 @@
   background: transparent;
 }
 
+.posterContainer {
+  flex-shrink: 0;
+  width: 200px;
+  height: 300px;
+}
+
+/* Override ImgCell size for modal */
+.posterContainer > div {
+  width: 200px !important;
+  height: 300px !important;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
 .poster {
   width: 200px;
   height: 300px;
