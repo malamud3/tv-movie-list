@@ -52,6 +52,15 @@ export const ImgCell = ({ posterPath, title, overview, rating, onClick }: MovieC
         </div>
       )}
 
+      {/* Debug: Always show a test rating circle - remove this later */}
+      {!rating && (
+        <div className={`${classes.ratingCircle} ${classes.excellent}`}>
+          <span className={classes.ratingText}>
+            8.5
+          </span>
+        </div>
+      )}
+
       {overview && (
         <div className={classes.overlay}>
           <div className={classes.overlayContent}>
