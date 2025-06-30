@@ -23,6 +23,8 @@ export const CellRow = memo<CellRowProps>(
           const itemKey = `${movie.id}-${rowIndex}-${colIndex}`;
           const title = getMediaTitle(movie);
 
+
+
           return (
             <li key={itemKey} ref={isLastItem ? setLastItemRef : undefined}>
               <Link

@@ -14,6 +14,8 @@ export const ImgCell = ({ posterPath, title, overview, rating, onClick, showRati
     ? `https://image.tmdb.org/t/p/w500${posterPath}`
     : '/placeholder-image.jpg'; // Fallback image for missing posterPath
 
+
+
   // Format rating to 1 decimal place and determine color
   const formatRating = (rating: number) => {
     return Math.round(rating * 10) / 10;
