@@ -50,6 +50,7 @@ const MovieDetailsModal = ({ movie }: MovieDetailsModalProps) => {
             title={title}
             overview={movie.overview}
             rating={movie.vote_average}
+            showRating={false}
           />
         </div>
         <div className={styles.details}>

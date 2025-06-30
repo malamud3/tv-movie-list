@@ -6,9 +6,10 @@ type MovieCardProps = {
   overview?: string;
   rating?: number; // Rating out of 10
   onClick?: () => void;
+  showRating?: boolean; // New prop to control rating visibility
 };
 
-export const ImgCell = ({ posterPath, title, overview, rating, onClick }: MovieCardProps) => {
+export const ImgCell = ({ posterPath, title, overview, rating, onClick, showRating = true }: MovieCardProps) => {
   const imageUrl = posterPath
     ? `https://image.tmdb.org/t/p/w500${posterPath}`
     : '/placeholder-image.jpg'; // Fallback image for missing posterPath
@@ -43,8 +44,8 @@ export const ImgCell = ({ posterPath, title, overview, rating, onClick }: MovieC
         loading="lazy"
       />
       
-      {/* Rating Circle */}
-      {rating && rating > 0 && (
+      {/* Rating Circle - Only show if enabled and rating exists */}
+      {showRating && rating && rating > 0 && (
         <div className={`${classes.ratingCircle} ${classes[getRatingColor(rating)]}`}>
           <span className={classes.ratingText}>
             {formatRating(rating)}
