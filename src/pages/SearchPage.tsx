@@ -1,6 +1,7 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import ListController from '../components/MovieList/ListController';
 import { tmdbActions } from '../interface/Consts';
+import { useDebounce } from '../util/hooks/useDebounce';
 import styles from './SearchPage.module.css';
 
 type ContentType = 'MOVIES' | 'TV_SHOWS';
@@ -8,6 +9,9 @@ type ContentType = 'MOVIES' | 'TV_SHOWS';
 export default function SearchPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState<ContentType>('MOVIES');
+  
+  // Debounce the search query to avoid excessive API calls
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -17,17 +21,41 @@ export default function SearchPage() {
     setSelectedType(event.target.value as ContentType);
   };
 
+  // Trim the debounced search query and check if it's valid for searching
+  const trimmedQuery = debouncedSearchQuery.trim();
+  const hasValidQuery = trimmedQuery.length >= 2; // Minimum 2 characters for search
+
+  // Memoize the title to avoid unnecessary re-renders
+  const searchTitle = useMemo(() => {
+    if (!hasValidQuery) {
+      return 'Enter a search term to find movies and TV shows';
+    }
+    return `Search Results for "${trimmedQuery}"`;
+  }, [trimmedQuery, hasValidQuery]);
+
   const renderResults = useCallback(() => {
+    if (!hasValidQuery) {
+      return (
+        <div className={styles.prompt}>
+          <p>Please enter at least 2 characters to start searching...</p>
+        </div>
+      );
+    }
+
     return (
-      <ListController
-        type={selectedType}
-        title={`Search Results for ""`}
-        fetchFunction={tmdbActions.search}
-        listType="vertical"
-        selectedId={undefined}
-      />
+      <div className={styles.resultsContainer}>
+        <ListController
+          type={selectedType}
+          title={searchTitle}
+          fetchFunction={tmdbActions.search}
+          listType="vertical"
+          selectedId={undefined}
+          query={trimmedQuery}
+          enabled={hasValidQuery}
+        />
+      </div>
     );
-  }, [selectedType]);
+  }, [selectedType, searchTitle, trimmedQuery, hasValidQuery]);
 
   return (
     <div className={styles.searchPage}>
@@ -35,7 +63,7 @@ export default function SearchPage() {
       <div className={styles.searchControls}>
         <input
           type="text"
-          placeholder="Search..."
+          placeholder="Search for movies, TV shows..."
           value={searchQuery}
           onChange={handleSearchChange}
           className={styles.searchInput}

@@ -15,6 +15,8 @@ interface ListControllerProps {
   fetchFunction: tmdbActions;
   selectedId?: number;
   listType?: 'vertical' | 'horizontal';
+  query?: string;
+  enabled?: boolean;
 }
 
 export default function ListController({
@@ -23,6 +25,8 @@ export default function ListController({
   fetchFunction,
   selectedId,
   listType = 'vertical',
+  query,
+  enabled = true,
 }: ListControllerProps) {
   const {
     data: pages,
@@ -31,7 +35,7 @@ export default function ListController({
     isFetchingNextPage,
     isLoading,
     error,
-  } = usePaginatedContent([type, fetchFunction]);
+  } = usePaginatedContent([type, fetchFunction], { query, enabled });
 
   const items: UnifiedMediaItem[] = useMemo(() => flattenAndFilterShows(pages), [pages]);
 

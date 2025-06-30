@@ -10,7 +10,7 @@ export default function MoviePage() {
     : undefined;
 
   return (
-    <main>
+    <div>
       <ListController
         key="recently-added-movies"
         type="MOVIES"
@@ -18,6 +18,6 @@ export default function MoviePage() {
         fetchFunction={tmdbActions.getRecentlyAdded}
         selectedId={selectedId}
       />
-    </main>
+    </div>
   );
 }

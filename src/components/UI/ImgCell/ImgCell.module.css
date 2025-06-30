@@ -4,9 +4,7 @@
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-color: #fff;
   cursor: pointer;
   display: flex;
@@ -29,10 +27,12 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(180deg,
+  background: linear-gradient(
+    180deg,
     rgba(0, 0, 0, 0.1) 0%,
     rgba(0, 0, 0, 0.7) 70%,
-    rgba(0, 0, 0, 0.9) 100%);
+    rgba(0, 0, 0, 0.9) 100%
+  );
   color: white;
   display: flex;
   align-items: flex-end;
@@ -61,4 +61,81 @@
   line-height: 1.3;
   margin: 0;
   opacity: 0.9;
+}
+
+/* Rating Circle Styles */
+.ratingCircle {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 10px;
+  color: white;
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.ratingText {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui,
+    sans-serif;
+  letter-spacing: -0.5px;
+}
+
+/* Rating Color Variants */
+.excellent {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border-color: rgba(34, 197, 94, 0.4);
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+}
+
+.good {
+  background: linear-gradient(135deg, #eab308, #ca8a04);
+  border-color: rgba(234, 179, 8, 0.4);
+  box-shadow: 0 2px 8px rgba(234, 179, 8, 0.3);
+}
+
+.average {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  border-color: rgba(249, 115, 22, 0.4);
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
+}
+
+.poor {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border-color: rgba(239, 68, 68, 0.4);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+/* Hover Effects */
+.card:hover .ratingCircle {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Light mode adjustments */
+@media (prefers-color-scheme: light) {
+  .ratingCircle {
+    border-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px) brightness(0.9);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .ratingCircle {
+    width: 28px;
+    height: 28px;
+    font-size: 9px;
+    top: 6px;
+    right: 6px;
+  }
 }

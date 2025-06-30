@@ -11,14 +11,14 @@ export default function HomePage() {
 
   if (!ListConfing?.length) {
     return (
-      <main>
+      <div>
         <p>No sections available</p>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main style={{ padding: 7 }}>
+    <div>
       {ListConfing.map((section) => (
         <ListController
           key={section.id}
@@ -29,6 +29,6 @@ export default function HomePage() {
           listType="horizontal"
         />
       ))}
-    </main>
+    </div>
   );
 }

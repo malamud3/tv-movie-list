@@ -4,13 +4,26 @@ type MovieCardProps = {
   posterPath: string;
   title?: string;
   overview?: string;
+  rating?: number; // Rating out of 10
   onClick?: () => void;
 };
 
-export const ImgCell = ({ posterPath, title, overview, onClick }: MovieCardProps) => {
+export const ImgCell = ({ posterPath, title, overview, rating, onClick }: MovieCardProps) => {
   const imageUrl = posterPath
     ? `https://image.tmdb.org/t/p/w500${posterPath}`
     : '/placeholder-image.jpg'; // Fallback image for missing posterPath
+
+  // Format rating to 1 decimal place and determine color
+  const formatRating = (rating: number) => {
+    return Math.round(rating * 10) / 10;
+  };
+
+  const getRatingColor = (rating: number) => {
+    if (rating >= 8) return 'excellent'; // Green
+    if (rating >= 6.5) return 'good'; // Yellow
+    if (rating >= 5) return 'average'; // Orange
+    return 'poor'; // Red
+  };
 
   return (
     <div
@@ -29,6 +42,16 @@ export const ImgCell = ({ posterPath, title, overview, onClick }: MovieCardProps
         height={240}
         loading="lazy"
       />
+      
+      {/* Rating Circle */}
+      {rating && rating > 0 && (
+        <div className={`${classes.ratingCircle} ${classes[getRatingColor(rating)]}`}>
+          <span className={classes.ratingText}>
+            {formatRating(rating)}
+          </span>
+        </div>
+      )}
+
       {overview && (
         <div className={classes.overlay}>
           <div className={classes.overlayContent}>

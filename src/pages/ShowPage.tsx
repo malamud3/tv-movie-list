@@ -10,7 +10,7 @@ export default function ShowPage() {
     : undefined;
 
   return (
-    <main style={{ padding: 7 }}>
+    <div>
       <ListController
         key="recently-added-shows"
         type="TV_SHOWS"
@@ -18,6 +18,6 @@ export default function ShowPage() {
         fetchFunction={tmdbActions.getRecentlyAdded}
         selectedId={selectedId}
       />
-    </main>
+    </div>
   );
 }

@@ -94,10 +94,7 @@ const doSearch = async (type: 'MOVIES' | 'TV_SHOWS', options: TmdbAPIProps) => {
         ? `${API_TV.doSearchMovie}${encodeURIComponent(options.query)}&page=${options.dataPage}`
         : `${API_TV.doSearchTv}${encodeURIComponent(options.query)}&page=${options.dataPage}`;
 
-
-    const formattedUrl = formatUrlPageGenre({ url, page: options.dataPage, genre: options.genreFilter ?? -1 });
-
-    return fetchFromTmdb(formattedUrl, options.signal);
+    return fetchFromTmdb(url, options.signal);
 };
 
 
