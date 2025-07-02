@@ -50,6 +50,19 @@ export default function ListController({
     [items, selectedId]
   );
 
+  // Debug: Log selected item data
+  if (selectedItem) {
+    console.log('ListController - selectedItem found:', {
+      id: selectedItem.id,
+      title: selectedItem.title || selectedItem.name,
+      overview: selectedItem.overview,
+      overviewExists: !!selectedItem.overview,
+      overviewLength: selectedItem.overview?.length || 0,
+    });
+  } else if (selectedId) {
+    console.log('ListController - selectedId but no item found:', selectedId, 'Available items:', items.length);
+  }
+
   return (
     <section>
       <h2>{title}</h2>

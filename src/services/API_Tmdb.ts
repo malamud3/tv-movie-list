@@ -15,6 +15,17 @@ const fetchFromTmdb = async (url: string, signal?: AbortSignal) => {
         throw new Error(`Failed to fetch data from TMDB: ${response.statusText}`);
     }
     const data = await response.json();
+    
+    // Debug: Log a sample of the data to check rating information
+    if (data.results && data.results.length > 0) {
+        console.log('TMDB API Response - First item:', {
+            id: data.results[0].id,
+            title: data.results[0].title || data.results[0].name,
+            vote_average: data.results[0].vote_average,
+            vote_count: data.results[0].vote_count
+        });
+    }
+    
     return data.results;
 };
 

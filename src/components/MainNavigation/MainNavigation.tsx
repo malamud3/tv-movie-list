@@ -15,6 +15,7 @@ const NAVIGATION_ITEMS: NavigationItem[] = [
   { path: '/movies', label: 'Movies', icon: '🎬' },
   { path: '/shows', label: 'Shows', icon: '📺' },
   { path: '/search', label: 'Search', icon: '🔍' },
+  { path: '/favorites', label: 'Favorites', icon: '⭐' },
 ];
 
 const USER_NAVIGATION_ITEMS: NavigationItem[] = [

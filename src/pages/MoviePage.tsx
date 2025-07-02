@@ -9,7 +9,8 @@ export default function MoviePage() {
     ? Number(showId)
     : undefined;
 
-
+  // Debug: Check if we can see rating data in console
+  console.log('MoviePage: showId =', showId, 'selectedId =', selectedId);
 
   return (
     <div>

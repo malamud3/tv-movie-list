@@ -6,6 +6,7 @@ import MoviePage from './pages/MoviePage';
 import MovieDetailsModalWrapper from './pages/MovieDetailsModalWrapper';
 import SearchPage from './pages/SearchPage';
 import ProfilePage from './pages/ProfilePage';
+import FavoritesPage from './pages/FavoritesPage';
 
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
       { path: 'shows', element: <ShowPage /> },
       { path: 'movies', element: <MoviePage /> },
       { path: 'search', element: <SearchPage /> },
+      { path: 'favorites', element: <FavoritesPage /> },
       { path: 'profile', element: <ProfilePage /> },
 
       {

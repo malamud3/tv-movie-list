@@ -1,4 +1,5 @@
 import classes from './ImgCell.module.css';
+import Star from '../Star/Star';
 
 type MovieCardProps = {
   posterPath: string;
@@ -7,14 +8,24 @@ type MovieCardProps = {
   rating?: number; // Rating out of 10
   onClick?: () => void;
   showRating?: boolean; // New prop to control rating visibility
+  isFavorite?: boolean; // Whether this item is favorited
+  onToggleFavorite?: (isFavorite: boolean) => void; // Callback for favorite toggle
+  showFavoriteButton?: boolean; // Whether to show the favorite star
 };
 
-export const ImgCell = ({ posterPath, title, overview, rating, onClick, showRating = true }: MovieCardProps) => {
-  const imageUrl = posterPath
+export const ImgCell = ({ 
+  posterPath, 
+  title, 
+  overview, 
+  rating, 
+  onClick, 
+  showRating = true,
+  isFavorite = false,
+  onToggleFavorite,
+  showFavoriteButton = true
+}: MovieCardProps) => {  const imageUrl = posterPath
     ? `https://image.tmdb.org/t/p/w500${posterPath}`
     : '/placeholder-image.jpg'; // Fallback image for missing posterPath
-
-
 
   // Format rating to 1 decimal place and determine color
   const formatRating = (rating: number) => {
@@ -27,6 +38,16 @@ export const ImgCell = ({ posterPath, title, overview, rating, onClick, showRati
     if (rating >= 5) return 'average'; // Orange
     return 'poor'; // Red
   };
+
+  // Debug: Log rating data with more details
+  console.log('ImgCell Debug:', {
+    title,
+    rating,
+    ratingType: typeof rating,
+    showRating,
+    shouldShow: showRating && rating && rating > 0,
+    ratingColor: rating ? getRatingColor(rating) : 'no-rating'
+  });
 
   return (
     <div
@@ -45,6 +66,18 @@ export const ImgCell = ({ posterPath, title, overview, rating, onClick, showRati
         height={240}
         loading="lazy"
       />
+      
+      {/* Favorite Star - Top left corner */}
+      {showFavoriteButton && (
+        <div className={classes.favoriteButton}>
+          <Star
+            isFavorite={isFavorite}
+            onToggleFavorite={onToggleFavorite}
+            size="small"
+            interactive={!!onToggleFavorite}
+          />
+        </div>
+      )}
       
       {/* Rating Circle - Only show if enabled and rating exists */}
       {showRating && rating && rating > 0 && (

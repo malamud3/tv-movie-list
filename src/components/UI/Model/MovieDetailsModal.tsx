@@ -3,8 +3,10 @@ import { UnifiedMediaItem } from '../../../interface/TmdbTypes.ts';
 import Modal from './Modal.tsx';
 import { useNavigate } from 'react-router-dom';
 import { useTrailer } from '../../../util/hooks/useTrailer.ts';
+import { useFavorites } from '../../../util/hooks/useFavorites.ts';
 import YouTubePlayer from '../../Youtube/YouTubePlayer.tsx';
 import { ImgCell } from '../ImgCell/ImgCell.tsx';
+import Star from '../Star/Star.tsx';
 import styles from './MovieDetailsModal.module.css';
 import { getMediaTitle, getMediaReleaseDate, formatReleaseDate } from '../../../util/dateHelpers.ts';
 
@@ -15,10 +17,34 @@ type MovieDetailsModalProps = {
 const MovieDetailsModal = ({ movie }: MovieDetailsModalProps) => {
   const navigate = useNavigate();
   const [shouldLoadTrailer, setShouldLoadTrailer] = useState(false);
+  const { isFavorite, toggleFavorite } = useFavorites();
+  
+  // Debug: Log the movie data to see what we're receiving
+  console.log('MovieDetailsModal - movie data:', {
+    id: movie.id,
+    title: getMediaTitle(movie),
+    overview: movie.overview,
+    overviewLength: movie.overview?.length || 0,
+    vote_average: movie.vote_average,
+    poster_path: movie.poster_path
+  });
   
   const title = getMediaTitle(movie);
   const releaseDate = getMediaReleaseDate(movie);
   const formattedReleaseDate = formatReleaseDate(releaseDate);
+
+  const handleToggleFavorite = () => {
+    toggleFavorite({
+      id: movie.id,
+      title,
+      poster_path: movie.poster_path,
+      overview: movie.overview,
+      vote_average: movie.vote_average,
+      media_type: movie.media_type
+    });
+  };
+
+  // ...existing code...
 
   // TanStack Query for trailer fetching - only enabled when shouldLoadTrailer is true
   const {
@@ -54,7 +80,14 @@ const MovieDetailsModal = ({ movie }: MovieDetailsModalProps) => {
           />
         </div>
         <div className={styles.details}>
-          <h2 className={styles.title}>{title}</h2>
+          <div className={styles.titleSection}>
+            <h2 className={styles.title}>{title}</h2>
+            <Star
+              isFavorite={isFavorite(movie.id)}
+              onToggleFavorite={handleToggleFavorite}
+              size="medium"
+            />
+          </div>
           <p>
             <strong>Rating:</strong>{' '}
             {movie.vote_average !== undefined

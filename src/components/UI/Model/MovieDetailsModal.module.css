@@ -133,6 +133,19 @@
   }
 }
 
+/* Title section with favorite star */
+.titleSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.titleSection .title {
+  margin: 0;
+  flex: 1;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .container {
