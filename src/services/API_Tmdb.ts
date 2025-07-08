@@ -101,9 +101,8 @@ const doSearch = async (type: 'MOVIES' | 'TV_SHOWS', options: TmdbAPIProps) => {
     if (!options.query) {
         throw new Error('Query string is required for search');
     }
-    const url = type === 'MOVIES'
-        ? `${API_TV.doSearchMovie}${encodeURIComponent(options.query)}&page=${options.dataPage}`
-        : `${API_TV.doSearchTv}${encodeURIComponent(options.query)}&page=${options.dataPage}`;
+    const baseUrl = type === 'MOVIES' ? API_TV.doSearchMovie : API_TV.doSearchTv;
+    const url = `${baseUrl}${encodeURIComponent(options.query)}&api_key=${API_TV.TMDB_API_KEY}&page=${options.dataPage}`;
 
     return fetchFromTmdb(url, options.signal);
 };
