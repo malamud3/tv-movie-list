@@ -53,6 +53,26 @@
    ```
 
 3. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Edit the `.env` file and add your API keys:
+   ```
+   VITE_API_KEY=your_tmdb_api_key_here
+   VITE_YOUTUBE_API_KEY=your_youtube_api_key_here
+   ```
+
+   **Get your API keys:**
+   - **TMDB API Key**: Sign up at [The Movie Database](https://www.themoviedb.org/settings/api)
+   - **YouTube API Key**: Get it from [Google Cloud Console](https://console.developers.google.com/)
+
+4. **Start the development server**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
    
    Create a `.env` file in the root directory:
    ```env
@@ -107,6 +127,50 @@
 | `npm run build` | Build for production |
 | `npm run preview` | Preview production build |
 | `npm run lint` | Run ESLint |
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. **Push your code to GitHub**
+   ```bash
+   git add .
+   git commit -m "Add environment variables setup"
+   git push origin main
+   ```
+
+2. **Deploy to Vercel**
+   - Go to [Vercel](https://vercel.com) and connect your GitHub account
+   - Import your repository
+   - Vercel will automatically detect it's a Vite project
+
+3. **Set up environment variables in Vercel**
+   - In your Vercel dashboard, go to your project settings
+   - Navigate to "Environment Variables"
+   - Add the following variables:
+     ```
+     VITE_API_KEY=your_tmdb_api_key_here
+     VITE_YOUTUBE_API_KEY=your_youtube_api_key_here
+     ```
+   - Make sure to set them for all environments (Production, Preview, and Development)
+
+4. **Redeploy**
+   - After adding environment variables, trigger a new deployment
+   - Your app should now work properly with the API keys
+
+### Alternative: Manual Environment Variable Setup
+
+If you prefer to set up environment variables manually:
+
+1. **In Vercel Dashboard:**
+   - Go to your project → Settings → Environment Variables
+   - Add `VITE_API_KEY` with your TMDB API key
+   - Add `VITE_YOUTUBE_API_KEY` with your YouTube API key
+
+2. **Important Notes:**
+   - ⚠️ **Never commit your `.env` file** - it's already in `.gitignore`
+   - 🔑 **Environment variables must start with `VITE_`** in Vite projects
+   - 🔄 **Redeploy after adding variables** for changes to take effect
 
 ## 🏗️ Project Structure
 

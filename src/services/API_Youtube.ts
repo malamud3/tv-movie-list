@@ -1,8 +1,17 @@
 const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
+
+if (!API_KEY) {
+    console.error('VITE_YOUTUBE_API_KEY is not defined in the environment variables');
+}
+
 const YOUTUBE_SEARCH_URL = "https://www.googleapis.com/youtube/v3/search";
 const YOUTUBE_WATCH_URL = "https://www.youtube.com/watch?v=";
 
 export async function getYoutubeTrailer(movieTitle: string): Promise<string> {
+    if (!API_KEY) {
+        throw new Error('YouTube API key is not configured');
+    }
+    
     const url = new URL(YOUTUBE_SEARCH_URL);
     url.searchParams.append("part", "id");
     url.searchParams.append("q", `${movieTitle} trailer`);
